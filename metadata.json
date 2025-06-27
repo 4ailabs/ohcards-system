@@ -1,0 +1,6 @@
+{
+  "name": "Simulador Interactivo de Cartas OH",
+  "description": "An interactive web application that simulates the OH card process for personal reflection. Users draw a random image and word card, and are guided through a series of introspective steps to connect with their initial situation.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}

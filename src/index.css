@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: 'Inter', sans-serif;
+    /* background-color: #FDFBF8; */
+    color: #402E32;
+    background-image: linear-gradient(135deg, #4B2E19 0%, #FFD600 100%);
+    background-attachment: fixed;
+}
+.btn-action {
+    background-color: #5D4333;
+    color: #FFFFFF;
+    border-radius: 9999px;
+    box-shadow: 0 2px 8px 0 rgba(64,46,50,0.10);
+    padding: 0.75rem 2rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin: 0.25rem 0.5rem;
+    transition: background-color 0.3s, transform 0.2s;
+}
+.btn-action:hover {
+    background-color: #7a5a3a;
+    transform: translateY(-2px) scale(1.04);
+}
+.btn-secondary {
+    background-color: #fff;
+    color: #5D4333;
+    border: 2px solid #EAE0D5;
+    border-radius: 9999px;
+    box-shadow: 0 2px 8px 0 rgba(64,46,50,0.07);
+    padding: 0.75rem 2rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin: 0.25rem 0.5rem;
+    transition: background 0.3s, color 0.3s, border 0.3s, transform 0.2s;
+}
+.btn-secondary:hover {
+    background-color: #F9F6F2;
+    color: #402E32;
+    border-color: #D37A47;
+    transform: translateY(-2px) scale(1.04);
+}
+.fade-in { animation: fadeIn 0.8s ease-in-out; }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+textarea {
+    background-color: #FFF;
+    border: 1px solid #EAE0D5;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    resize: none;
+}
+textarea:focus {
+    outline: none;
+    border-color: #D37A47;
+    box-shadow: 0 0 0 2px rgba(211, 122, 71, 0.2);
+}
+.summary-box {
+    background-color: #F9F6F2;
+    border-left: 3px solid #D37A47;
+    padding: 0.75rem 1rem;
+    border-radius: 0.25rem;
+    font-style: italic;
+    color: #5D4333;
+}
+/* .card-back {
+    background-color: #5D4333;
+    border: 4px solid #EAE0D5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+} */
+.oh-circle {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    border: 2px solid #D37A47;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #D37A47;
+    font-weight: bold;
+    font-size: 1.875rem;
+}

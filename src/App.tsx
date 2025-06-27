@@ -1,0 +1,195 @@
+import React, { useState, useMemo, useCallback } from 'react';
+import { PROCESS_STEPS, STEP_DETAILS } from './constants';
+import type { GamePhase, AllInputs, ProcessPath, StepKey } from './types';
+import StartScreen from './components/StartScreen';
+import ProgressBar from './components/ProgressBar';
+import CardDisplay from './components/CardDisplay';
+import GuidanceArea from './components/GuidanceArea';
+import ImageSelectionScreen from './components/ImageSelectionScreen';
+import WordSelectionScreen from './components/WordSelectionScreen';
+import PairSelectionScreen from './components/PairSelectionScreen';
+
+const App: React.FC = () => {
+    const [gamePhase, setGamePhase] = useState<GamePhase>('start');
+    const [situation, setSituation] = useState<string>('');
+    const [path, setPath] = useState<ProcessPath | null>(null);
+    const [inputs, setInputs] = useState<AllInputs>({});
+
+    // Multi-card state
+    const [numberOfPairs, setNumberOfPairs] = useState<number>(1);
+    const [chosenImages, setChosenImages] = useState<string[]>([]);
+    const [chosenWords, setChosenWords] = useState<string[]>([]);
+    const [currentPairIndex, setCurrentPairIndex] = useState<number>(0);
+    const [currentStepIndex, setCurrentStepIndex] = useState<number>(-1);
+    const [completedPairs, setCompletedPairs] = useState<number[]>([]);
+
+
+    const currentSteps = useMemo(() => {
+        return path ? PROCESS_STEPS[path] : [];
+    }, [path]);
+
+    const currentStepKey = useMemo<StepKey | null>(() => {
+        return currentSteps[currentStepIndex] ?? null;
+    }, [currentSteps, currentStepIndex]);
+
+    const handleReset = useCallback(() => {
+        setGamePhase('start');
+        setSituation('');
+        setPath(null);
+        setInputs({});
+        setNumberOfPairs(1);
+        setChosenImages([]);
+        setChosenWords([]);
+        setCurrentPairIndex(0);
+        setCurrentStepIndex(-1);
+        setCompletedPairs([]);
+    }, []);
+
+    const handleStart = useCallback((pairCount: number) => {
+        setNumberOfPairs(pairCount);
+        setGamePhase('selecting_image');
+    }, []);
+    
+    const handleImageSelect = useCallback((imageUrls: string[]) => {
+        setChosenImages(imageUrls);
+        setGamePhase('selecting_word');
+    }, []);
+
+    const handleWordSelect = useCallback((words: string[]) => {
+        setChosenWords(words);
+        setGamePhase('choosing_pair');
+    }, []);
+
+    const handleStartProcessingPair = useCallback((pairIndex: number) => {
+        setCurrentPairIndex(pairIndex);
+        setCurrentStepIndex(-1);
+        setPath(null);
+        setGamePhase('choosing_path');
+    }, []);
+
+    const handlePathSelect = useCallback((chosenPath: ProcessPath) => {
+        setPath(chosenPath);
+        setCurrentStepIndex(0);
+        setGamePhase('processing');
+    }, []);
+
+    const handleInputChange = useCallback((key: string, value: string) => {
+        setInputs(prev => ({
+            ...prev,
+            [currentPairIndex]: {
+                ...(prev[currentPairIndex] || {}),
+                [key]: value
+            }
+        }));
+    }, [currentPairIndex]);
+
+    const handleNext = useCallback(() => {
+        const isLastStepOfPair = currentStepIndex === currentSteps.length - 1;
+        
+        if (isLastStepOfPair) {
+            setCompletedPairs(prev => [...new Set([...prev, currentPairIndex])]);
+            setGamePhase('choosing_pair');
+        } else {
+            setCurrentStepIndex(prev => prev + 1);
+        }
+    }, [currentStepIndex, currentSteps.length, currentPairIndex]);
+
+    const handleBack = useCallback(() => {
+       if (gamePhase === 'processing') {
+            if (currentStepIndex > 0) {
+                setCurrentStepIndex(prev => prev - 1);
+            } else {
+                setGamePhase('choosing_path');
+            }
+        } else if (gamePhase === 'choosing_path') {
+            setGamePhase('choosing_pair');
+        }
+    }, [gamePhase, currentStepIndex]);
+
+    const renderContent = () => {
+        switch (gamePhase) {
+            case 'start':
+                return <StartScreen
+                    situation={situation}
+                    onSituationChange={setSituation}
+                    onStart={handleStart}
+                />;
+            case 'selecting_image':
+                return <ImageSelectionScreen onSelect={handleImageSelect} numberOfPairs={numberOfPairs} />;
+            case 'selecting_word':
+                return <WordSelectionScreen onSelect={handleWordSelect} numberOfPairs={numberOfPairs} />;
+            case 'choosing_pair':
+                return <PairSelectionScreen 
+                            numberOfPairs={numberOfPairs}
+                            completedPairs={completedPairs}
+                            onSelectPair={handleStartProcessingPair}
+                            onReset={handleReset}
+                        />;
+            case 'choosing_path':
+            case 'processing':
+                 return (
+                    <div className="w-full max-w-6xl mx-auto p-4 md:p-8 fade-in">
+                        <div className="bg-white rounded-2xl shadow-xl w-full">
+                            {gamePhase === 'processing' && currentStepKey && path && (
+                                <ProgressBar
+                                    currentStep={currentStepIndex + 1}
+                                    totalSteps={currentSteps.length}
+                                    stepName={STEP_DETAILS[currentStepKey].name}
+                                    currentPair={currentPairIndex + 1}
+                                    totalPairs={numberOfPairs}
+                                />
+                            )}
+                            <div className="flex flex-col md:flex-row">
+                                <div className="w-full md:w-1/2 p-8 flex items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 min-h-[520px]">
+                                    <div className="relative w-64 h-96 md:w-80 md:h-[450px]">
+                                        <CardDisplay
+                                            gamePhase={gamePhase}
+                                            currentStepKey={currentStepKey}
+                                            chosenImage={chosenImages[currentPairIndex]}
+                                            chosenWord={chosenWords[currentPairIndex]}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="w-full md:w-1/2 p-8 flex flex-col justify-between min-h-[520px]">
+                                    <GuidanceArea
+                                        gamePhase={gamePhase}
+                                        path={path}
+                                        currentStepKey={currentStepKey}
+                                        isFirstStep={currentStepIndex <= 0}
+                                        isLastStep={false}
+                                        inputs={inputs}
+                                        currentPairIndex={currentPairIndex}
+                                        onChoosePath={handlePathSelect}
+                                        onInputChange={handleInputChange}
+                                        onNext={handleNext}
+                                        onBack={handleBack}
+                                        onReset={handleReset}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            default:
+                handleReset();
+                return null;
+        }
+    }
+
+    return (
+        <div className="min-h-screen flex flex-col items-center justify-center p-4" style={{ background: 'linear-gradient(135deg, #4B2E19 0%, #FFD600 100%)' }}>
+          {renderContent()}
+          <footer className="text-center text-xs text-gray-500 py-4 mt-4 bg-white/70 rounded-lg shadow-inner w-full max-w-2xl mx-auto">
+              <p>Este es un simulador para la reflexión personal. No reemplaza la consulta con un profesional cualificado.</p>
+              {gamePhase === 'start' && (
+                <div className="mt-2">
+                  <div className="font-bold uppercase tracking-wide">SISTEMA OH+ INTEGRATIVO</div>
+                  <div className="text-[0.95em] mt-1">Un Ecosistema Formativo y Digital en Técnicas Proyectivas con OH Cards</div>
+                </div>
+              )}
+          </footer>
+        </div>
+    );
+};
+
+export default App;
