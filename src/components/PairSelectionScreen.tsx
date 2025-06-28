@@ -27,7 +27,7 @@ const PairSelectionScreen: React.FC<PairSelectionScreenProps> = ({ numberOfPairs
                             type="button"
                             onClick={() => onSelectPair(index)}
                             disabled={isCompleted}
-                            className={`p-4 sm:p-6 md:p-8 rounded-lg shadow-lg flex flex-col items-center justify-center transition-all duration-300 touch-manipulation ${
+                            className={`my-2 sm:my-0 p-5 sm:p-6 md:p-8 rounded-lg shadow-lg flex flex-col items-center justify-center transition-all duration-300 touch-manipulation ${
                                 isCompleted
                                     ? 'bg-gray-200 text-gray-500 cursor-not-allowed transform'
                                     : 'btn-secondary hover:shadow-xl hover:-translate-y-1'
@@ -43,7 +43,7 @@ const PairSelectionScreen: React.FC<PairSelectionScreenProps> = ({ numberOfPairs
             <button 
                 type="button" 
                 onClick={onReset} 
-                className="btn-action px-6 sm:px-8 py-2 sm:py-3 rounded-full font-bold text-base sm:text-lg shadow-lg mt-8 sm:mt-12 w-full sm:w-auto"
+                className="btn-action px-6 sm:px-8 py-2 sm:py-3 rounded-full font-bold text-base sm:text-lg shadow-lg mt-10 sm:mt-12 w-full sm:w-auto"
             >
                 {allPairsCompleted || completedPairs.length > 0 ? 'Empezar de Nuevo' : 'Cancelar y Empezar de Nuevo'}
             </button>
