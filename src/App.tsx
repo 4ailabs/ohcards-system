@@ -9,6 +9,8 @@ import ImageSelectionScreen from './components/ImageSelectionScreen';
 import WordSelectionScreen from './components/WordSelectionScreen';
 import PairSelectionScreen from './components/PairSelectionScreen';
 
+const isEmbedded = window.self !== window.top;
+
 const App: React.FC = () => {
     const [gamePhase, setGamePhase] = useState<GamePhase>('start');
     const [situation, setSituation] = useState<string>('');
@@ -177,7 +179,9 @@ const App: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center p-2 sm:p-4" style={{ background: 'linear-gradient(135deg, #4B2E19 0%, #FFD600 100%)' }}>
+        <div className={
+            `${isEmbedded ? 'min-h-0' : 'min-h-screen'} flex flex-col items-center justify-center p-2 sm:p-4` 
+        } style={{ background: 'linear-gradient(135deg, #4B2E19 0%, #FFD600 100%)' }}>
           {renderContent()}
           <footer className="text-center text-xs sm:text-sm text-gray-500 py-3 sm:py-4 mt-2 sm:mt-4 bg-white/70 rounded-lg shadow-inner w-full max-w-2xl mx-auto px-2 sm:px-4">
               <p>Este es un simulador para la reflexión personal. No reemplaza la consulta con un profesional cualificado.</p>
