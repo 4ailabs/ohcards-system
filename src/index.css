@@ -8,7 +8,34 @@ body {
     color: #402E32;
     background-image: linear-gradient(135deg, #4B2E19 0%, #FFD600 100%);
     background-attachment: fixed;
+    /* Optimizaciones móviles */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    /* Prevenir zoom no deseado en iOS */
+    touch-action: manipulation;
 }
+
+/* Mejoras para dispositivos táctiles */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Optimizaciones de scroll para móviles */
+html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Mejoras de accesibilidad para móviles */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
 .btn-action {
     background-color: #5D4333;
     color: #FFFFFF;
@@ -19,11 +46,20 @@ body {
     font-size: 1.1rem;
     margin: 0.25rem 0.5rem;
     transition: background-color 0.3s, transform 0.2s;
+    /* Mejoras táctiles */
+    touch-action: manipulation;
+    user-select: none;
+    /* Mejoras de accesibilidad */
+    min-height: 44px; /* Tamaño mínimo recomendado para touch */
 }
 .btn-action:hover {
     background-color: #7a5a3a;
     transform: translateY(-2px) scale(1.04);
 }
+.btn-action:active {
+    transform: translateY(0) scale(0.98);
+}
+
 .btn-secondary {
     background-color: #fff;
     color: #5D4333;
@@ -35,6 +71,11 @@ body {
     font-size: 1.1rem;
     margin: 0.25rem 0.5rem;
     transition: background 0.3s, color 0.3s, border 0.3s, transform 0.2s;
+    /* Mejoras táctiles */
+    touch-action: manipulation;
+    user-select: none;
+    /* Mejoras de accesibilidad */
+    min-height: 44px; /* Tamaño mínimo recomendado para touch */
 }
 .btn-secondary:hover {
     background-color: #F9F6F2;
@@ -42,23 +83,34 @@ body {
     border-color: #D37A47;
     transform: translateY(-2px) scale(1.04);
 }
+.btn-secondary:active {
+    transform: translateY(0) scale(0.98);
+}
+
 .fade-in { animation: fadeIn 0.8s ease-in-out; }
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
 textarea {
     background-color: #FFF;
     border: 1px solid #EAE0D5;
     border-radius: 0.5rem;
     padding: 0.75rem;
     resize: none;
+    /* Mejoras móviles */
+    font-size: 16px; /* Previene zoom en iOS */
+    line-height: 1.5;
+    /* Mejoras de accesibilidad */
+    min-height: 44px;
 }
 textarea:focus {
     outline: none;
     border-color: #D37A47;
     box-shadow: 0 0 0 2px rgba(211, 122, 71, 0.2);
 }
+
 .summary-box {
     background-color: #F9F6F2;
     border-left: 3px solid #D37A47;
@@ -86,4 +138,75 @@ textarea:focus {
     color: #D37A47;
     font-weight: bold;
     font-size: 1.875rem;
+}
+
+/* Optimizaciones específicas para móviles */
+@media (max-width: 640px) {
+    .btn-action, .btn-secondary {
+        padding: 0.875rem 1.5rem;
+        font-size: 1rem;
+        margin: 0.125rem 0.25rem;
+    }
+    
+    textarea {
+        font-size: 16px; /* Previene zoom en iOS */
+        padding: 0.875rem;
+    }
+    
+    /* Mejoras para pantallas pequeñas */
+    .fade-in {
+        animation-duration: 0.6s;
+    }
+}
+
+/* Mejoras para pantallas muy pequeñas */
+@media (max-width: 480px) {
+    .btn-action, .btn-secondary {
+        padding: 1rem 1.25rem;
+        font-size: 0.95rem;
+    }
+    
+    /* Optimizar espaciado en pantallas muy pequeñas */
+    .p-2 {
+        padding: 0.5rem;
+    }
+    
+    .gap-2 {
+        gap: 0.5rem;
+    }
+}
+
+/* Optimizaciones para tablets */
+@media (min-width: 641px) and (max-width: 1024px) {
+    .btn-action, .btn-secondary {
+        padding: 0.875rem 1.75rem;
+        font-size: 1.05rem;
+    }
+}
+
+/* Mejoras para pantallas de alta densidad */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .btn-action, .btn-secondary {
+        box-shadow: 0 1px 4px 0 rgba(64,46,50,0.15);
+    }
+}
+
+/* Optimizaciones para modo oscuro del sistema */
+@media (prefers-color-scheme: dark) {
+    /* Mantener el diseño actual pero con mejoras de contraste */
+    .btn-secondary {
+        background-color: #f8f8f8;
+        color: #402E32;
+    }
+}
+
+/* Mejoras para dispositivos con hover limitado */
+@media (hover: none) {
+    .btn-action:hover, .btn-secondary:hover {
+        transform: none;
+    }
+    
+    .btn-action:active, .btn-secondary:active {
+        transform: scale(0.98);
+    }
 }

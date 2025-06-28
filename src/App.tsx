@@ -128,7 +128,7 @@ const App: React.FC = () => {
             case 'choosing_path':
             case 'processing':
                  return (
-                    <div className="w-full max-w-6xl mx-auto p-4 md:p-8 fade-in">
+                    <div className="w-full max-w-6xl mx-auto p-2 sm:p-4 md:p-8 fade-in">
                         <div className="bg-white rounded-2xl shadow-xl w-full">
                             {gamePhase === 'processing' && currentStepKey && path && (
                                 <ProgressBar
@@ -139,9 +139,9 @@ const App: React.FC = () => {
                                     totalPairs={numberOfPairs}
                                 />
                             )}
-                            <div className="flex flex-col md:flex-row">
-                                <div className="w-full md:w-1/2 p-8 flex items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 min-h-[520px]">
-                                    <div className="relative w-64 h-96 md:w-80 md:h-[450px]">
+                            <div className="flex flex-col lg:flex-row">
+                                <div className="w-full lg:w-1/2 p-4 sm:p-6 md:p-8 flex items-center justify-center border-b lg:border-b-0 lg:border-r border-gray-200 min-h-[400px] sm:min-h-[480px] md:min-h-[520px]">
+                                    <div className="relative w-56 h-80 sm:w-64 sm:h-96 md:w-80 md:h-[450px]">
                                         <CardDisplay
                                             gamePhase={gamePhase}
                                             currentStepKey={currentStepKey}
@@ -150,7 +150,7 @@ const App: React.FC = () => {
                                         />
                                     </div>
                                 </div>
-                                <div className="w-full md:w-1/2 p-8 flex flex-col justify-between min-h-[520px]">
+                                <div className="w-full lg:w-1/2 p-4 sm:p-6 md:p-8 flex flex-col justify-between min-h-[400px] sm:min-h-[480px] md:min-h-[520px]">
                                     <GuidanceArea
                                         gamePhase={gamePhase}
                                         path={path}
@@ -177,14 +177,14 @@ const App: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center p-4" style={{ background: 'linear-gradient(135deg, #4B2E19 0%, #FFD600 100%)' }}>
+        <div className="min-h-screen flex flex-col items-center justify-center p-2 sm:p-4" style={{ background: 'linear-gradient(135deg, #4B2E19 0%, #FFD600 100%)' }}>
           {renderContent()}
-          <footer className="text-center text-xs text-gray-500 py-4 mt-4 bg-white/70 rounded-lg shadow-inner w-full max-w-2xl mx-auto">
+          <footer className="text-center text-xs sm:text-sm text-gray-500 py-3 sm:py-4 mt-2 sm:mt-4 bg-white/70 rounded-lg shadow-inner w-full max-w-2xl mx-auto px-2 sm:px-4">
               <p>Este es un simulador para la reflexión personal. No reemplaza la consulta con un profesional cualificado.</p>
               {gamePhase === 'start' && (
                 <div className="mt-2">
-                  <div className="font-bold uppercase tracking-wide">SISTEMA OH+ INTEGRATIVO</div>
-                  <div className="text-[0.95em] mt-1">Un Ecosistema Formativo y Digital en Técnicas Proyectivas con OH Cards</div>
+                  <div className="font-bold uppercase tracking-wide text-xs sm:text-sm">SISTEMA OH+ INTEGRATIVO</div>
+                  <div className="text-[0.85em] sm:text-[0.95em] mt-1">Un Ecosistema Formativo y Digital en Técnicas Proyectivas con OH Cards</div>
                 </div>
               )}
           </footer>

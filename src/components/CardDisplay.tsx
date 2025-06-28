@@ -10,7 +10,7 @@ interface CardDisplayProps {
 
 const WordCardLayout: React.FC<{ word: string; baseTextSize?: string; showInnerBorder?: boolean }> = ({
   word,
-  baseTextSize = 'text-2xl',
+  baseTextSize = 'text-lg sm:text-xl md:text-2xl',
   showInnerBorder = true,
 }) => {
   const textClasses = 'font-bold whitespace-nowrap uppercase';
@@ -75,10 +75,10 @@ const WordCardBack: React.FC = () => (
 const CombinationCard: React.FC<{ word: string; image?: string }> = ({ word, image }) => (
   <div className="relative w-full h-full flex items-center justify-center bg-white rounded-2xl shadow-lg">
     {/* Palabra en los cuatro lados, fuera del marco rojo */}
-    <span style={{ position: 'absolute', top: '3.5%', left: '50%', transform: 'translateX(-50%)', color: '#402E32', fontWeight: 700, fontSize: '1.35rem', letterSpacing: '0.08em' }}>{word}</span>
-    <span style={{ position: 'absolute', bottom: '3.5%', left: '50%', transform: 'translateX(-50%)', color: '#402E32', fontWeight: 700, fontSize: '1.35rem', letterSpacing: '0.08em' }}>{word}</span>
-    <span style={{ position: 'absolute', left: '3.5%', top: '50%', transform: 'translateY(-50%) rotate(-90deg)', color: '#402E32', fontWeight: 700, fontSize: '1.35rem', letterSpacing: '0.08em' }}>{word}</span>
-    <span style={{ position: 'absolute', right: '3.5%', top: '50%', transform: 'translateY(-50%) rotate(90deg)', color: '#402E32', fontWeight: 700, fontSize: '1.35rem', letterSpacing: '0.08em' }}>{word}</span>
+    <span style={{ position: 'absolute', top: '3.5%', left: '50%', transform: 'translateX(-50%)', color: '#402E32', fontWeight: 700, fontSize: 'clamp(0.875rem, 2.5vw, 1.35rem)', letterSpacing: '0.08em' }}>{word}</span>
+    <span style={{ position: 'absolute', bottom: '3.5%', left: '50%', transform: 'translateX(-50%)', color: '#402E32', fontWeight: 700, fontSize: 'clamp(0.875rem, 2.5vw, 1.35rem)', letterSpacing: '0.08em' }}>{word}</span>
+    <span style={{ position: 'absolute', left: '3.5%', top: '50%', transform: 'translateY(-50%) rotate(-90deg)', color: '#402E32', fontWeight: 700, fontSize: 'clamp(0.875rem, 2.5vw, 1.35rem)', letterSpacing: '0.08em' }}>{word}</span>
+    <span style={{ position: 'absolute', right: '3.5%', top: '50%', transform: 'translateY(-50%) rotate(90deg)', color: '#402E32', fontWeight: 700, fontSize: 'clamp(0.875rem, 2.5vw, 1.35rem)', letterSpacing: '0.08em' }}>{word}</span>
     {/* Marco rojo delgado y la imagen (solo si image está definida) */}
     <div style={{ position: 'absolute', top: '10%', left: '10%', width: '80%', height: '80%', border: '2.5px solid #D32F2F', borderRadius: '0.7rem', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff', overflow: 'hidden' }}>
       {image && (
@@ -92,11 +92,11 @@ const CardDisplay: React.FC<CardDisplayProps> = ({ gamePhase, currentStepKey, ch
 
     if (gamePhase === 'choosing_path') {
         return (
-            <div className="absolute inset-0 flex gap-4 items-center justify-center">
-                <div className="w-40 h-56 md:w-48 md:h-64">
+            <div className="absolute inset-0 flex gap-2 sm:gap-4 items-center justify-center">
+                <div className="w-32 h-44 sm:w-40 sm:h-56 md:w-48 md:h-64">
                     <ImageCardBack />
                 </div>
-                <div className="w-40 h-56 md:w-48 md:h-64">
+                <div className="w-32 h-44 sm:w-40 sm:h-56 md:w-48 md:h-64">
                     <WordCardBack />
                 </div>
             </div>

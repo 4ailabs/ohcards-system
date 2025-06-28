@@ -1,9 +1,7 @@
-
 import React from 'react';
 import { STEP_DETAILS } from '../constants';
-import type { GamePhase, AllInputs, ProcessPath, StepKey } from '../types';
+import type { GamePhase, ProcessPath, StepKey, AllInputs } from '../types';
 import ActionButtons from './ActionButtons';
-import Summary from './Summary';
 
 interface GuidanceAreaProps {
     gamePhase: GamePhase;
@@ -34,47 +32,72 @@ const GuidanceArea: React.FC<GuidanceAreaProps> = ({
     onBack,
     onReset
 }) => {
+    const currentInput = inputs[currentPairIndex]?.[currentStepKey || ''] || '';
+
     if (gamePhase === 'choosing_path') {
         return (
-            <div className="w-full h-full flex flex-col items-center justify-center gap-6 text-center fade-in">
-                <h2 className="text-2xl font-bold mb-4" style={{ color: '#5D4333' }}>¿Qué quieres ver primero?</h2>
-                <div className="flex justify-center gap-4">
-                    <button type="button" onClick={() => onChoosePath('image')} className="btn-secondary px-6 py-3 rounded-full font-bold text-lg">La Imagen</button>
-                    <button type="button" onClick={() => onChoosePath('word')} className="btn-secondary px-6 py-3 rounded-full font-bold text-lg">La Palabra</button>
+            <div className="flex flex-col justify-center h-full">
+                <div className="text-center mb-6">
+                    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4" style={{ color: '#402E32' }}>
+                        ¿Cómo quieres empezar?
+                    </h2>
+                    <p className="text-sm sm:text-base text-gray-600 mb-6">
+                        Elige el orden que prefieras para explorar tus cartas
+                    </p>
                 </div>
-                 <button type="button" onClick={onBack} className="btn-secondary text-sm px-4 py-2 rounded-full mt-6">
-                    Volver a selección de pares
-                </button>
+                <div className="space-y-4">
+                    <button
+                        onClick={() => onChoosePath('image')}
+                        className="w-full p-4 sm:p-6 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 text-left"
+                    >
+                        <div className="font-bold text-lg sm:text-xl mb-2">Empezar con la Imagen</div>
+                        <div className="text-sm sm:text-base opacity-90">
+                            Primero describe lo que ves, luego crea una historia, y finalmente define la palabra
+                        </div>
+                    </button>
+                    <button
+                        onClick={() => onChoosePath('word')}
+                        className="w-full p-4 sm:p-6 bg-gradient-to-r from-yellow-600 to-yellow-700 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 text-left"
+                    >
+                        <div className="font-bold text-lg sm:text-xl mb-2">Empezar con la Palabra</div>
+                        <div className="text-sm sm:text-base opacity-90">
+                            Primero define la palabra, luego describe la imagen, y finalmente crea una historia
+                        </div>
+                    </button>
+                </div>
             </div>
         );
     }
-    
+
     if (gamePhase === 'processing' && currentStepKey) {
         const stepDetail = STEP_DETAILS[currentStepKey];
-        const inputId = `input_${currentStepKey}`;
-        const currentPairInputs = inputs[currentPairIndex] || {};
-
+        
         return (
-            <div className="flex flex-col justify-between h-full">
-                <div className="flex flex-col flex-grow fade-in">
-                    <p className="text-gray-700 mb-4">{stepDetail.prompt}</p>
-                    {currentStepKey === 'self_connection' && <Summary inputs={inputs} />}
+            <div className="flex flex-col h-full">
+                <div className="flex-1">
+                    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4" style={{ color: '#402E32' }}>
+                        {stepDetail.name}
+                    </h2>
+                    <p className="text-sm sm:text-base text-gray-700 mb-6 leading-relaxed">
+                        {stepDetail.prompt}
+                    </p>
                     <textarea
-                        id={inputId}
-                        value={currentPairInputs[inputId] || ''}
-                        onChange={(e) => onInputChange(inputId, e.target.value)}
-                        className="w-full flex-grow mt-2"
+                        value={currentInput}
+                        onChange={(e) => onInputChange(currentStepKey, e.target.value)}
                         placeholder={stepDetail.placeholder}
-                        rows={10}
+                        className="w-full h-32 sm:h-40 md:h-48 p-3 sm:p-4 text-sm sm:text-base border-2 border-gray-200 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                        style={{ backgroundColor: '#FDFBF8' }}
                     />
                 </div>
-                <ActionButtons
-                    isFirstStep={isFirstStep}
-                    isLastStep={isLastStep}
-                    onBack={onBack}
-                    onNext={onNext}
-                    onReset={onReset}
-                />
+                <div className="mt-4 sm:mt-6">
+                    <ActionButtons
+                        onNext={onNext}
+                        onBack={onBack}
+                        onReset={onReset}
+                        isFirstStep={isFirstStep}
+                        isLastStep={isLastStep}
+                    />
+                </div>
             </div>
         );
     }
