@@ -42,7 +42,7 @@ const WordCardLayout: React.FC<{ word: string; baseTextSize?: string; showInnerB
 };
 
 // Componente reverso verde (imagen)
-const ImageCardBack: React.FC = () => (
+export const ImageCardBack: React.FC = () => (
   <svg width="100%" height="100%" viewBox="0 0 300 420" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block', borderRadius: '1rem', border: '4px solid #A5C96A', background: '#fff' }}>
     <defs>
       <pattern id="scribbleGreen" patternUnits="userSpaceOnUse" width="40" height="40">
@@ -57,7 +57,7 @@ const ImageCardBack: React.FC = () => (
 );
 
 // Componente reverso marrón (palabra)
-const WordCardBack: React.FC = () => (
+export const WordCardBack: React.FC = () => (
   <svg width="100%" height="100%" viewBox="0 0 300 420" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block', borderRadius: '1rem', border: '4px solid #C2A24A', background: '#fff' }}>
     <defs>
       <pattern id="scribbleBrown" patternUnits="userSpaceOnUse" width="40" height="40">

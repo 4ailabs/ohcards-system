@@ -2,211 +2,523 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    font-family: 'Inter', sans-serif;
-    /* background-color: #FDFBF8; */
-    color: #402E32;
-    background-image: linear-gradient(135deg, #4B2E19 0%, #FFD600 100%);
-    background-attachment: fixed;
-    /* Optimizaciones móviles */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-    /* Prevenir zoom no deseado en iOS */
-    touch-action: manipulation;
-}
-
-/* Mejoras para dispositivos táctiles */
+/* Estilos base para móviles */
 * {
-    -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
 }
 
-/* Optimizaciones de scroll para móviles */
-html {
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #402E32;
+  background-image: linear-gradient(135deg, #4B2E19 0%, #FFD600 100%);
+  background-attachment: fixed;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* Mejoras de accesibilidad para móviles */
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
+/* Mejoras para touch targets en móviles */
+button, input, textarea, select {
+  touch-action: manipulation;
+  min-height: 44px; /* Apple's recommended minimum touch target size */
 }
 
+/* Botones optimizados para móviles - Colores originales */
 .btn-action {
-    background-color: #5D4333;
-    color: #FFFFFF;
-    border-radius: 9999px;
-    box-shadow: 0 2px 8px 0 rgba(64,46,50,0.10);
-    padding: 0.75rem 2rem;
-    font-weight: bold;
-    font-size: 1.1rem;
-    margin: 0.25rem 0.5rem;
-    transition: background-color 0.3s, transform 0.2s;
-    /* Mejoras táctiles */
-    touch-action: manipulation;
-    user-select: none;
-    /* Mejoras de accesibilidad */
-    min-height: 44px; /* Tamaño mínimo recomendado para touch */
+  background-color: #5D4333;
+  color: #FFFFFF;
+  border-radius: 9999px;
+  box-shadow: 0 2px 8px 0 rgba(64,46,50,0.10);
+  padding: 0.75rem 2rem;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin: 0.25rem 0.5rem;
+  transition: background-color 0.3s, transform 0.2s;
+  touch-action: manipulation;
+  user-select: none;
+  min-height: 44px;
 }
+
 .btn-action:hover {
-    background-color: #7a5a3a;
-    transform: translateY(-2px) scale(1.04);
+  background-color: #7a5a3a;
+  transform: translateY(-2px) scale(1.04);
 }
+
 .btn-action:active {
-    transform: translateY(0) scale(0.98);
+  transform: translateY(0) scale(0.98);
 }
 
 .btn-secondary {
-    background-color: #fff;
-    color: #5D4333;
-    border: 2px solid #EAE0D5;
-    border-radius: 9999px;
-    box-shadow: 0 2px 8px 0 rgba(64,46,50,0.07);
-    padding: 0.75rem 2rem;
-    font-weight: bold;
-    font-size: 1.1rem;
-    margin: 0.25rem 0.5rem;
-    transition: background 0.3s, color 0.3s, border 0.3s, transform 0.2s;
-    /* Mejoras táctiles */
-    touch-action: manipulation;
-    user-select: none;
-    /* Mejoras de accesibilidad */
-    min-height: 44px; /* Tamaño mínimo recomendado para touch */
+  background-color: #fff;
+  color: #5D4333;
+  border: 2px solid #EAE0D5;
+  border-radius: 9999px;
+  box-shadow: 0 2px 8px 0 rgba(64,46,50,0.07);
+  padding: 0.75rem 2rem;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin: 0.25rem 0.5rem;
+  transition: background 0.3s, color 0.3s, border 0.3s, transform 0.2s;
+  touch-action: manipulation;
+  user-select: none;
+  min-height: 44px;
 }
+
 .btn-secondary:hover {
-    background-color: #F9F6F2;
-    color: #402E32;
-    border-color: #D37A47;
-    transform: translateY(-2px) scale(1.04);
+  background-color: #F9F6F2;
+  color: #402E32;
+  border-color: #D37A47;
+  transform: translateY(-2px) scale(1.04);
 }
+
 .btn-secondary:active {
-    transform: translateY(0) scale(0.98);
+  transform: translateY(0) scale(0.98);
 }
 
-.fade-in { animation: fadeIn 0.8s ease-in-out; }
+/* Animaciones suaves */
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-textarea {
-    background-color: #FFF;
-    border: 1px solid #EAE0D5;
-    border-radius: 0.5rem;
-    padding: 0.75rem;
-    resize: none;
-    /* Mejoras móviles */
-    font-size: 16px; /* Previene zoom en iOS */
-    line-height: 1.5;
-    /* Mejoras de accesibilidad */
-    min-height: 44px;
-}
-textarea:focus {
-    outline: none;
-    border-color: #D37A47;
-    box-shadow: 0 0 0 2px rgba(211, 122, 71, 0.2);
+/* Mejoras para cartas en móviles */
+.card {
+  @apply bg-white rounded-lg shadow-lg overflow-hidden;
+  @apply transition-all duration-300;
+  @apply transform hover:scale-105;
+  @apply active:scale-95;
 }
 
-.summary-box {
-    background-color: #F9F6F2;
-    border-left: 3px solid #D37A47;
-    padding: 0.75rem 1rem;
-    border-radius: 0.25rem;
-    font-style: italic;
-    color: #5D4333;
+/* Optimizaciones para texto en móviles */
+h1, h2, h3, h4, h5, h6 {
+  @apply font-bold;
+  line-height: 1.2;
 }
-/* .card-back {
-    background-color: #5D4333;
-    border: 4px solid #EAE0D5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 1rem;
-} */
-.oh-circle {
-    width: 5rem;
-    height: 5rem;
-    border-radius: 50%;
-    border: 2px solid #D37A47;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #D37A47;
-    font-weight: bold;
-    font-size: 1.875rem;
+
+p {
+  line-height: 1.6;
+}
+
+/* Mejoras para inputs en móviles */
+input, textarea {
+  background-color: #FFF;
+  border: 1px solid #EAE0D5;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  resize: none;
+  font-size: 16px; /* Previene zoom en iOS */
+  line-height: 1.5;
+  min-height: 44px;
+  transition: all 0.2s;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #D37A47;
+  box-shadow: 0 0 0 2px rgba(211, 122, 71, 0.2);
+}
+
+/* Optimizaciones para scroll en móviles */
+.scroll-container {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* Mejoras para grids responsivos */
+.grid-responsive {
+  @apply grid gap-3 sm:gap-4;
+  @apply justify-items-center;
+}
+
+/* Optimizaciones para contenedores */
+.container-mobile {
+  @apply w-full max-w-6xl mx-auto;
+  @apply p-3 sm:p-4 md:p-6 lg:p-8;
+}
+
+/* Mejoras para botones de navegación */
+.nav-button {
+  @apply px-4 sm:px-6 py-2 sm:py-3;
+  @apply text-sm sm:text-base font-semibold;
+  @apply rounded-full shadow-lg;
+  @apply hover:scale-105 transition-transform duration-200;
+  @apply active:scale-95;
+  @apply touch-manipulation;
+}
+
+/* Optimizaciones para cartas de resumen */
+.summary-card {
+  @apply bg-white/90 backdrop-blur-md;
+  @apply rounded-2xl shadow-xl;
+  @apply p-4 sm:p-6;
+  @apply mb-4 sm:mb-6;
+}
+
+/* Mejoras para indicadores de progreso */
+.progress-indicator {
+  @apply flex justify-center items-center;
+  @apply space-x-2 sm:space-x-4;
+  @apply mt-4;
+}
+
+.progress-step {
+  @apply w-8 h-8 sm:w-10 sm:h-10;
+  @apply rounded-full flex items-center justify-center;
+  @apply text-sm sm:text-base font-bold;
+  @apply transition-all duration-200;
+}
+
+/* Optimizaciones para texto responsivo */
+.text-responsive {
+  @apply text-sm sm:text-base;
+  @apply leading-relaxed;
+}
+
+.text-responsive-lg {
+  @apply text-base sm:text-lg;
+  @apply leading-relaxed;
+}
+
+.text-responsive-xl {
+  @apply text-lg sm:text-xl;
+  @apply leading-relaxed;
+}
+
+/* Mejoras para espaciado responsivo */
+.spacing-responsive {
+  @apply space-y-3 sm:space-y-4;
+}
+
+.spacing-responsive-lg {
+  @apply space-y-4 sm:space-y-6;
+}
+
+/* Optimizaciones para botones de acción */
+.action-button {
+  @apply px-6 sm:px-8 py-3 sm:py-4;
+  @apply text-base sm:text-lg font-semibold;
+  @apply rounded-full shadow-lg;
+  @apply hover:scale-105 transition-transform duration-200;
+  @apply active:scale-95;
+  @apply touch-manipulation;
+  @apply w-full sm:w-auto;
+}
+
+/* Mejoras para contenedores de cartas */
+.card-container {
+  @apply bg-white/90 backdrop-blur-md;
+  @apply rounded-2xl shadow-xl;
+  @apply p-4 sm:p-6;
+  @apply mb-4 sm:mb-6;
+}
+
+/* Optimizaciones para grids de cartas */
+.card-grid {
+  @apply grid gap-2 sm:gap-3 md:gap-4;
+  @apply justify-items-center;
+}
+
+/* Mejoras para botones de selección */
+.selection-button {
+  @apply p-3 sm:p-4;
+  @apply rounded-lg text-sm sm:text-base font-medium;
+  @apply transition-all duration-200;
+  @apply shadow-lg hover:scale-105;
+  @apply active:scale-95;
+  @apply touch-manipulation;
+}
+
+/* Optimizaciones para texto de cartas */
+.card-text {
+  @apply text-xs sm:text-sm;
+  @apply leading-tight;
+}
+
+.card-title {
+  @apply text-xs sm:text-sm font-bold;
+  @apply leading-tight;
+}
+
+/* Mejoras para indicadores de cartas */
+.card-indicator {
+  @apply absolute -top-1 -left-1;
+  @apply w-5 h-5 sm:w-6 sm:h-6;
+  @apply rounded-full flex items-center justify-center;
+  @apply text-xs font-bold z-10;
+  @apply shadow-lg;
+}
+
+/* Optimizaciones para botones de carta */
+.card-button {
+  @apply absolute -bottom-2 -right-2;
+  @apply w-6 h-6 sm:w-7 sm:h-7;
+  @apply rounded-full flex items-center justify-center;
+  @apply text-white text-xs font-bold;
+  @apply shadow-lg;
+  @apply touch-manipulation;
+}
+
+/* Mejoras para contenedores principales */
+.main-container {
+  @apply w-full max-w-6xl mx-auto;
+  @apply p-3 sm:p-4 md:p-6 lg:p-8;
+}
+
+/* Optimizaciones para headers */
+.header-container {
+  @apply bg-white/90 backdrop-blur-md;
+  @apply rounded-2xl shadow-xl;
+  @apply p-4 sm:p-6;
+  @apply mb-4 sm:mb-6;
+}
+
+/* Mejoras para títulos responsivos */
+.title-responsive {
+  @apply text-xl sm:text-2xl md:text-3xl;
+  @apply font-bold text-gray-800;
+  @apply text-center;
+}
+
+.subtitle-responsive {
+  @apply text-lg sm:text-xl;
+  @apply font-semibold text-gray-800;
+  @apply text-center;
+}
+
+/* Optimizaciones para texto de descripción */
+.description-text {
+  @apply text-sm sm:text-base;
+  @apply text-gray-600;
+  @apply text-center;
+  @apply leading-relaxed;
+}
+
+/* Mejoras para botones de navegación */
+.navigation-buttons {
+  @apply flex flex-col sm:flex-row;
+  @apply gap-3 sm:gap-4;
+  @apply justify-center;
+}
+
+/* Optimizaciones para contenedores de contenido */
+.content-container {
+  @apply bg-white/90 backdrop-blur-md;
+  @apply rounded-2xl shadow-xl;
+  @apply p-4 sm:p-6;
+  @apply mb-4 sm:mb-6;
+}
+
+/* Mejoras para grids responsivos */
+.responsive-grid {
+  @apply grid gap-3 sm:gap-4;
+  @apply justify-items-center;
+}
+
+/* Optimizaciones para botones de acción principales */
+.primary-action-button {
+  @apply px-6 sm:px-8 py-3 sm:py-4;
+  @apply text-base sm:text-lg font-semibold;
+  @apply rounded-full shadow-lg;
+  @apply hover:scale-105 transition-transform duration-200;
+  @apply active:scale-95;
+  @apply touch-manipulation;
+}
+
+/* Mejoras para botones secundarios */
+.secondary-action-button {
+  @apply px-6 sm:px-8 py-3 sm:py-4;
+  @apply text-base sm:text-lg font-semibold;
+  @apply rounded-full shadow-lg;
+  @apply hover:scale-105 transition-transform duration-200;
+  @apply active:scale-95;
+  @apply touch-manipulation;
+}
+
+/* Optimizaciones para contenedores de botones */
+.button-container {
+  @apply flex flex-col sm:flex-row;
+  @apply gap-3 sm:gap-4;
+  @apply justify-center;
+}
+
+/* Mejoras para texto de estado */
+.status-text {
+  @apply text-sm text-gray-600;
+  @apply text-center;
+}
+
+/* Optimizaciones para contenedores de progreso */
+.progress-container {
+  @apply text-center;
+  @apply mb-4;
+}
+
+/* Mejoras para indicadores de estado */
+.status-indicator {
+  @apply text-center;
+  @apply p-3 sm:p-4;
+  @apply rounded-lg;
+  @apply text-sm sm:text-base;
+  @apply font-medium;
+  @apply transition-all duration-200;
+}
+
+/* Optimizaciones para contenedores de resumen */
+.summary-container {
+  @apply space-y-4 sm:space-y-6;
+}
+
+/* Mejoras para contenedores de reflexiones */
+.reflection-container {
+  @apply space-y-2 sm:space-y-3;
+}
+
+/* Optimizaciones para texto de reflexiones */
+.reflection-text {
+  @apply text-xs sm:text-sm;
+  @apply text-gray-800;
+  @apply leading-relaxed;
+}
+
+/* Mejoras para contenedores de reflexiones individuales */
+.reflection-item {
+  @apply bg-gray-50;
+  @apply rounded-lg;
+  @apply p-2 sm:p-3;
+}
+
+/* Optimizaciones para títulos de reflexiones */
+.reflection-title {
+  @apply text-xs sm:text-sm;
+  @apply font-medium text-gray-600;
+  @apply mb-1;
+}
+
+/* Mejoras para contenedores de cartas de resumen */
+.summary-card-container {
+  @apply flex justify-center;
+  @apply gap-3 sm:gap-4;
+  @apply mb-4 sm:mb-6;
+}
+
+/* Optimizaciones para contenedores de vista general */
+.overview-container {
+  @apply bg-white/90 backdrop-blur-md;
+  @apply rounded-2xl shadow-xl;
+  @apply p-4 sm:p-6;
+  @apply mb-4 sm:mb-6;
+}
+
+/* Mejoras para títulos de vista general */
+.overview-title {
+  @apply text-lg sm:text-xl md:text-2xl;
+  @apply font-semibold text-gray-800;
+  @apply mb-3 sm:mb-4;
+  @apply text-center;
+}
+
+/* Optimizaciones para grids de vista general */
+.overview-grid {
+  @apply grid gap-2 sm:gap-3 md:gap-4;
+  @apply justify-items-center;
+}
+
+/* Mejoras para contenedores de botones de acción final */
+.final-action-container {
+  @apply flex flex-col sm:flex-row;
+  @apply gap-3 sm:gap-4;
+  @apply justify-center;
+}
+
+/* Optimizaciones para botones de acción final */
+.final-action-button {
+  @apply px-6 sm:px-8 py-3 sm:py-4;
+  @apply text-base sm:text-lg font-semibold;
+  @apply rounded-full shadow-lg;
+  @apply hover:scale-105 transition-transform duration-200;
+  @apply active:scale-95;
+  @apply touch-manipulation;
 }
 
 /* Optimizaciones específicas para móviles */
 @media (max-width: 640px) {
-    .btn-action, .btn-secondary {
-        padding: 0.875rem 1.5rem;
-        font-size: 1rem;
-        margin: 0.125rem 0.25rem;
-    }
-    
-    textarea {
-        font-size: 16px; /* Previene zoom en iOS */
-        padding: 0.875rem;
-    }
-    
-    /* Mejoras para pantallas pequeñas */
-    .fade-in {
-        animation-duration: 0.6s;
-    }
+  .btn-action, .btn-secondary {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    margin: 0.125rem 0.25rem;
+  }
+  
+  textarea {
+    font-size: 16px; /* Previene zoom en iOS */
+    padding: 0.875rem;
+  }
+
+  /* Mejoras para pantallas pequeñas */
+  .fade-in {
+    animation-duration: 0.6s;
+  }
 }
 
 /* Mejoras para pantallas muy pequeñas */
 @media (max-width: 480px) {
-    .btn-action, .btn-secondary {
-        padding: 1rem 1.25rem;
-        font-size: 0.95rem;
-    }
-    
-    /* Optimizar espaciado en pantallas muy pequeñas */
-    .p-2 {
-        padding: 0.5rem;
-    }
-    
-    .gap-2 {
-        gap: 0.5rem;
-    }
+  .btn-action, .btn-secondary {
+    padding: 1rem 1.25rem;
+    font-size: 0.95rem;
+  }
+
+  /* Optimizar espaciado en pantallas muy pequeñas */
+  .p-2 {
+    padding: 0.5rem;
+  }
+
+  .gap-2 {
+    gap: 0.5rem;
+  }
 }
 
 /* Optimizaciones para tablets */
 @media (min-width: 641px) and (max-width: 1024px) {
-    .btn-action, .btn-secondary {
-        padding: 0.875rem 1.75rem;
-        font-size: 1.05rem;
-    }
+  .btn-action, .btn-secondary {
+    padding: 0.875rem 1.75rem;
+    font-size: 1.05rem;
+  }
 }
 
 /* Mejoras para pantallas de alta densidad */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    .btn-action, .btn-secondary {
-        box-shadow: 0 1px 4px 0 rgba(64,46,50,0.15);
-    }
+  .btn-action, .btn-secondary {
+    box-shadow: 0 1px 4px 0 rgba(64,46,50,0.15);
+  }
 }
 
 /* Optimizaciones para modo oscuro del sistema */
 @media (prefers-color-scheme: dark) {
-    /* Mantener el diseño actual pero con mejoras de contraste */
-    .btn-secondary {
-        background-color: #f8f8f8;
-        color: #402E32;
-    }
+  /* Mantener el diseño actual pero con mejoras de contraste */
+  .btn-secondary {
+    background-color: #f8f8f8;
+    color: #402E32;
+  }
 }
 
 /* Mejoras para dispositivos con hover limitado */
 @media (hover: none) {
-    .btn-action:hover, .btn-secondary:hover {
-        transform: none;
-    }
-    
-    .btn-action:active, .btn-secondary:active {
-        transform: scale(0.98);
-    }
+  .btn-action:hover, .btn-secondary:hover {
+    transform: none;
+  }
+
+  .btn-action:active, .btn-secondary:active {
+    transform: scale(0.98);
+  }
 }

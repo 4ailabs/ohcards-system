@@ -8,6 +8,9 @@ import GuidanceArea from './components/GuidanceArea';
 import ImageSelectionScreen from './components/ImageSelectionScreen';
 import WordSelectionScreen from './components/WordSelectionScreen';
 import PairSelectionScreen from './components/PairSelectionScreen';
+import CanvasScreen from './components/CanvasScreen';
+import CanvasSetupScreen from './components/CanvasSetupScreen';
+import SummaryScreen from './components/SummaryScreen';
 
 const isEmbedded = window.self !== window.top;
 
@@ -62,6 +65,34 @@ const App: React.FC = () => {
         setGamePhase('choosing_pair');
     }, []);
 
+    const handleCanvasCardSelect = useCallback((cardId: number) => {
+        // Si es selección por par, cardId es el índice del par
+        // Si es selección por orden, cardId es el ID de la carta individual
+        const pairIndex = typeof cardId === 'number' && cardId < numberOfPairs 
+            ? cardId 
+            : Math.floor(cardId / 2);
+        
+        setCurrentPairIndex(pairIndex);
+        setCurrentStepIndex(-1);
+        setPath(null);
+        setGamePhase('choosing_path');
+    }, [numberOfPairs]);
+
+    const handleCanvasSetupComplete = useCallback((images: string[], words: string[], numberOfPairs: number) => {
+        setChosenImages(images);
+        setChosenWords(words);
+        setNumberOfPairs(numberOfPairs);
+        setGamePhase('canvas');
+    }, []);
+
+    const handleGoToCanvas = useCallback(() => {
+        setGamePhase('canvas_setup');
+    }, []);
+
+    const handleStartProcessFromCanvas = useCallback(() => {
+        setGamePhase('choosing_pair');
+    }, []);
+
     const handleStartProcessingPair = useCallback((pairIndex: number) => {
         setCurrentPairIndex(pairIndex);
         setCurrentStepIndex(-1);
@@ -89,12 +120,19 @@ const App: React.FC = () => {
         const isLastStepOfPair = currentStepIndex === currentSteps.length - 1;
         
         if (isLastStepOfPair) {
-            setCompletedPairs(prev => [...new Set([...prev, currentPairIndex])]);
-            setGamePhase('choosing_pair');
+            const newCompletedPairs = [...new Set([...completedPairs, currentPairIndex])];
+            setCompletedPairs(newCompletedPairs);
+            
+            // Verificar si todos los pares están completados
+            if (newCompletedPairs.length === numberOfPairs) {
+                setGamePhase('summary');
+            } else {
+                setGamePhase('choosing_pair');
+            }
         } else {
             setCurrentStepIndex(prev => prev + 1);
         }
-    }, [currentStepIndex, currentSteps.length, currentPairIndex]);
+    }, [currentStepIndex, currentSteps.length, currentPairIndex, completedPairs, numberOfPairs]);
 
     const handleBack = useCallback(() => {
        if (gamePhase === 'processing') {
@@ -115,16 +153,39 @@ const App: React.FC = () => {
                     situation={situation}
                     onSituationChange={setSituation}
                     onStart={handleStart}
+                    onGoToCanvas={handleGoToCanvas}
                 />;
             case 'selecting_image':
                 return <ImageSelectionScreen onSelect={handleImageSelect} numberOfPairs={numberOfPairs} />;
             case 'selecting_word':
                 return <WordSelectionScreen onSelect={handleWordSelect} numberOfPairs={numberOfPairs} />;
+            case 'canvas_setup':
+                return <CanvasSetupScreen
+                            onSetupComplete={handleCanvasSetupComplete}
+                            onBack={() => setGamePhase('start')}
+                        />;
+            case 'canvas':
+                return <CanvasScreen
+                            chosenImages={chosenImages}
+                            chosenWords={chosenWords}
+                            numberOfPairs={numberOfPairs}
+                            onBack={() => setGamePhase('start')}
+                            onReset={handleReset}
+                            onStartProcess={handleStartProcessFromCanvas}
+                        />;
             case 'choosing_pair':
                 return <PairSelectionScreen 
                             numberOfPairs={numberOfPairs}
                             completedPairs={completedPairs}
                             onSelectPair={handleStartProcessingPair}
+                            onReset={handleReset}
+                        />;
+            case 'summary':
+                return <SummaryScreen
+                            chosenImages={chosenImages}
+                            chosenWords={chosenWords}
+                            numberOfPairs={numberOfPairs}
+                            inputs={inputs}
                             onReset={handleReset}
                         />;
             case 'choosing_path':
@@ -178,20 +239,25 @@ const App: React.FC = () => {
         }
     }
 
-    return (
+        return (
         <div className={
-            `${isEmbedded ? 'min-h-0' : 'min-h-screen'} flex flex-col items-center justify-center p-2 sm:p-4` 
+            `${isEmbedded ? 'min-h-0' : 'min-h-screen'} flex flex-col items-center justify-center p-2 sm:p-4`
         } style={{ background: 'linear-gradient(135deg, #4B2E19 0%, #FFD600 100%)' }}>
-          {renderContent()}
-          <footer className="text-center text-xs sm:text-sm text-gray-500 py-3 sm:py-4 mt-2 sm:mt-4 bg-white/70 rounded-lg shadow-inner w-full max-w-2xl mx-auto px-2 sm:px-4">
-              <p>Este es un simulador para la reflexión personal. No reemplaza la consulta con un profesional cualificado.</p>
-              {gamePhase === 'start' && (
-                <div className="mt-2">
-                  <div className="font-bold uppercase tracking-wide text-xs sm:text-sm">SISTEMA OH+ INTEGRATIVO</div>
-                  <div className="text-[0.85em] sm:text-[0.95em] mt-1">Un Ecosistema Formativo y Digital en Técnicas Proyectivas con OH Cards</div>
+            {renderContent()}
+            <footer className="text-center text-xs sm:text-sm text-gray-500 py-2 sm:py-3 md:py-4 mt-2 sm:mt-4 bg-white/70 rounded-lg shadow-inner w-full max-w-2xl mx-auto px-2 sm:px-4">
+                <p className="leading-relaxed">Este es un simulador para la reflexión personal. No reemplaza la consulta con un profesional cualificado.</p>
+                {gamePhase === 'start' && (
+                    <div className="mt-2 sm:mt-3">
+                        <div className="font-bold uppercase tracking-wide text-xs sm:text-sm">SISTEMA OH+ INTEGRATIVO</div>
+                        <div className="text-[0.85em] sm:text-[0.95em] mt-1 leading-relaxed">Un Ecosistema Formativo y Digital en Técnicas Proyectivas con OH Cards</div>
+                    </div>
+                )}
+                <div className="mt-2 sm:mt-3 pt-2 border-t border-gray-300/50">
+                    <p className="text-[0.75em] sm:text-[0.85em] text-gray-400 leading-relaxed">
+                        Creado por Dr. Miguel Ojeda Ríos
+                    </p>
                 </div>
-              )}
-          </footer>
+            </footer>
         </div>
     );
 };
