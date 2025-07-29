@@ -179,6 +179,9 @@ const CanvasScreen: React.FC<CanvasScreenProps> = ({
         );
     };
 
+    const selectedCount = cards.filter(card => card.isSelected).length;
+    const totalCards = cards.length;
+
     return (
         <div className="w-full max-w-6xl mx-auto p-3 sm:p-4 md:p-6 lg:p-8">
             {/* Header */}
@@ -190,7 +193,17 @@ const CanvasScreen: React.FC<CanvasScreenProps> = ({
                     Toca las cartas para voltearlas y ver su contenido
                 </p>
                 <div className="text-center">
-                    <p className="text-sm text-gray-600">Total de cartas: {cards.length} (Pares: {numberOfPairs})</p>
+                    <p className="text-sm text-gray-600">
+                        Total de cartas: {totalCards} (Pares: {numberOfPairs})
+                    </p>
+                    <p className="text-sm text-blue-600 font-medium">
+                        Seleccionadas: {selectedCount} de {totalCards}
+                    </p>
+                    {selectedCount === totalCards && (
+                        <p className="text-sm text-green-600 font-bold animate-pulse">
+                            ¡Todas las cartas seleccionadas!
+                        </p>
+                    )}
                 </div>
             </div>
 
