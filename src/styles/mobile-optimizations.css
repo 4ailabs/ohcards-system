@@ -452,14 +452,29 @@
 
 /* Detección de iOS */
 @supports (-webkit-touch-callout: none) {
-  /* Deshabilitar callout en iOS */
-  * {
+  /* Deshabilitar callout en iOS solo para elementos no-input */
+  button,
+  a,
+  .btn,
+  img {
     -webkit-touch-callout: none;
   }
 
-  /* Deshabilitar zoom en doble tap */
-  body {
+  /* Deshabilitar zoom en doble tap solo para elementos no-input */
+  button,
+  a,
+  .btn {
     touch-action: manipulation;
+  }
+
+  /* Permitir selección y edición en inputs */
+  input,
+  textarea,
+  select {
+    -webkit-touch-callout: default;
+    -webkit-user-select: text;
+    user-select: text;
+    touch-action: auto;
   }
 
   /* Mejorar renderizado de fuentes */
