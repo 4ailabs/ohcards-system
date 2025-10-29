@@ -1,0 +1,524 @@
+/**
+ * Mobile Optimizations - OH Cards
+ *
+ * Optimizaciones específicas para dispositivos móviles
+ * Mejora la experiencia en pantallas táctiles pequeñas
+ */
+
+/* ========================================
+   MEJORAS GENERALES PARA MÓVIL
+   ======================================== */
+
+/* Prevenir zoom en iOS al hacer focus en inputs */
+@media (max-width: 640px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px !important; /* iOS no hace zoom si >= 16px */
+  }
+}
+
+/* Optimizar área táctil en móviles pequeños */
+@media (max-width: 480px) {
+  /* Touch targets mínimo 44x44px */
+  button,
+  a,
+  input[type="checkbox"],
+  input[type="radio"],
+  .btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Aumentar padding de botones en móviles muy pequeños */
+  .btn-primary,
+  .btn-secondary,
+  .btn-action {
+    padding: 0.875rem 1.25rem;
+    font-size: 0.9375rem; /* 15px */
+  }
+}
+
+/* ========================================
+   ESPACIADO OPTIMIZADO PARA MÓVIL
+   ======================================== */
+
+/* Reducir padding en contenedores para aprovechar espacio */
+@media (max-width: 640px) {
+  .container,
+  .container-glass {
+    padding: 0.75rem; /* 12px */
+  }
+
+  /* Margenes reducidos entre elementos */
+  .mb-4 {
+    margin-bottom: 0.75rem;
+  }
+
+  .mb-6 {
+    margin-bottom: 1rem;
+  }
+
+  /* Reducir gaps en grids */
+  .gap-3 {
+    gap: 0.5rem;
+  }
+
+  .gap-4 {
+    gap: 0.625rem;
+  }
+}
+
+/* ========================================
+   TEXTOS OPTIMIZADOS PARA MÓVIL
+   ======================================== */
+
+/* Mejorar legibilidad en pantallas pequeñas */
+@media (max-width: 640px) {
+  h1 {
+    font-size: 1.5rem; /* 24px */
+    line-height: 1.25;
+  }
+
+  h2 {
+    font-size: 1.25rem; /* 20px */
+    line-height: 1.3;
+  }
+
+  h3 {
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.35;
+  }
+
+  /* Texto base ligeramente más pequeño pero legible */
+  p,
+  span,
+  div {
+    line-height: 1.5;
+  }
+}
+
+/* ========================================
+   CARTAS OPTIMIZADAS PARA MÓVIL
+   ======================================== */
+
+/* Ajustar tamaño de cartas en pantallas muy pequeñas */
+@media (max-width: 375px) {
+  /* iPhone SE y similares */
+  .card-oh-sm {
+    width: 4.5rem; /* 72px */
+  }
+
+  .card-oh-md {
+    width: 5rem; /* 80px */
+  }
+
+  .card-oh-lg {
+    width: 6rem; /* 96px */
+  }
+
+  .card-oh-xl {
+    width: 7rem; /* 112px */
+  }
+}
+
+/* Pantallas muy pequeñas (< 360px) */
+@media (max-width: 359px) {
+  .card-oh-sm {
+    width: 4rem; /* 64px */
+  }
+
+  .card-oh-md {
+    width: 4.5rem; /* 72px */
+  }
+
+  .card-oh-lg {
+    width: 5.5rem; /* 88px */
+  }
+
+  .card-oh-xl {
+    width: 6.5rem; /* 104px */
+  }
+}
+
+/* ========================================
+   GRIDS OPTIMIZADOS PARA MÓVIL
+   ======================================== */
+
+/* Grid de selección de cartas más compacto */
+@media (max-width: 480px) {
+  .card-selection-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 359px) {
+  .card-selection-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.375rem;
+  }
+}
+
+/* ========================================
+   BOTONES MEJORADOS PARA TOUCH
+   ======================================== */
+
+/* Aumentar área táctil sin aumentar tamaño visual */
+@media (max-width: 640px) {
+  button::before,
+  a::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    z-index: -1;
+  }
+
+  /* Botones de acción más fáciles de presionar */
+  .btn {
+    position: relative;
+    padding: 0.875rem 1.5rem;
+  }
+
+  /* Botones en fila mejor espaciados */
+  .flex.gap-3 button,
+  .flex.gap-4 button {
+    margin: 0.25rem;
+  }
+}
+
+/* ========================================
+   SCROLL OPTIMIZADO PARA MÓVIL
+   ======================================== */
+
+/* Mejorar scroll en móvil */
+@media (max-width: 640px) {
+  .overflow-y-auto,
+  .overflow-auto {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  /* Padding inferior para evitar que el contenido quede detrás del navbar de iOS */
+  .main-content {
+    padding-bottom: env(safe-area-inset-bottom, 1rem);
+  }
+}
+
+/* ========================================
+   MODALS Y OVERLAYS PARA MÓVIL
+   ======================================== */
+
+/* Modals a pantalla completa en móvil */
+@media (max-width: 640px) {
+  .modal,
+  .dialog {
+    width: 100vw;
+    min-height: 100vh;
+    margin: 0;
+    border-radius: 0;
+  }
+}
+
+/* ========================================
+   INPUTS Y FORMS OPTIMIZADOS
+   ======================================== */
+
+@media (max-width: 640px) {
+  /* Textarea más grande en móvil para mejor escritura */
+  textarea {
+    min-height: 120px;
+    font-size: 16px; /* Previene zoom en iOS */
+    line-height: 1.5;
+  }
+
+  /* Select más grande */
+  select {
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  /* Input de búsqueda */
+  input[type="search"] {
+    -webkit-appearance: none;
+    border-radius: 0.5rem;
+  }
+}
+
+/* ========================================
+   NAVEGACIÓN OPTIMIZADA
+   ======================================== */
+
+@media (max-width: 640px) {
+  /* Breadcrumbs más compactos */
+  .breadcrumb {
+    font-size: 0.875rem;
+  }
+
+  /* Tabs horizontales con scroll */
+  .tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+}
+
+/* ========================================
+   PROGRESS BARS MEJORADOS
+   ======================================== */
+
+@media (max-width: 640px) {
+  .progress-bar {
+    height: 6px; /* Más delgado en móvil */
+  }
+
+  .progress-fill {
+    transition: width 0.3s ease-out;
+  }
+}
+
+/* ========================================
+   BADGES Y INDICADORES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .badge {
+    font-size: 0.625rem; /* 10px */
+    padding: 0.125rem 0.375rem;
+  }
+
+  /* Badges de número en cartas */
+  .card-indicator {
+    width: 1.25rem;
+    height: 1.25rem;
+    font-size: 0.625rem;
+  }
+}
+
+/* ========================================
+   ORIENTACIÓN: LANDSCAPE EN MÓVIL
+   ======================================== */
+
+@media (max-width: 896px) and (orientation: landscape) {
+  /* Reducir padding vertical en landscape */
+  .container,
+  .container-glass {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  /* Headers más compactos */
+  h1 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  h2 {
+    font-size: 1.125rem;
+    margin-bottom: 0.375rem;
+  }
+
+  /* Reducir altura de textareas */
+  textarea {
+    min-height: 80px;
+  }
+}
+
+/* ========================================
+   SAFE AREAS (iPhone X+, notch devices)
+   ======================================== */
+
+@supports (padding: env(safe-area-inset-bottom)) {
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  /* Botones fijos en la parte inferior */
+  .fixed-bottom-buttons {
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+  }
+}
+
+/* ========================================
+   PERFORMANCE: REDUCE ANIMACIONES EN MÓVIL LENTO
+   ======================================== */
+
+@media (max-width: 640px) and (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ========================================
+   CONTRASTE MEJORADO EN MÓVIL
+   ======================================== */
+
+/* Bajo sol, el contraste es crítico */
+@media (max-width: 640px) {
+  /* Sombras más pronunciadas */
+  .shadow-lg {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Borders más visibles */
+  .border {
+    border-width: 1.5px;
+  }
+
+  /* Texto más oscuro para mejor legibilidad */
+  .text-gray-600 {
+    color: #4b5563;
+  }
+}
+
+/* ========================================
+   GESTOS Y SWIPE (preparación futura)
+   ======================================== */
+
+@media (max-width: 640px) {
+  /* Elementos deslizables */
+  .swipeable {
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .swipeable:active {
+    cursor: grabbing;
+  }
+}
+
+/* ========================================
+   LOADING STATES OPTIMIZADOS
+   ======================================== */
+
+@media (max-width: 640px) {
+  /* Spinner más pequeño */
+  .spinner {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  /* Skeleton screens más estrechos */
+  .skeleton {
+    border-radius: 0.375rem;
+  }
+}
+
+/* ========================================
+   NOTIFICACIONES Y TOASTS
+   ======================================== */
+
+@media (max-width: 640px) {
+  .toast,
+  .notification {
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    left: 1rem;
+    right: 1rem;
+    width: auto;
+  }
+}
+
+/* ========================================
+   MEJORAS ESPECÍFICAS DE ANDROID
+   ======================================== */
+
+/* Android suele tener DPI más alto */
+@media (min-resolution: 2dppx) and (max-width: 640px) {
+  /* Bordes ligeramente más gruesos */
+  .border {
+    border-width: 1px;
+  }
+
+  /* Sombras más suaves */
+  .shadow-md {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* ========================================
+   MEJORAS ESPECÍFICAS DE iOS
+   ======================================== */
+
+/* Detección de iOS */
+@supports (-webkit-touch-callout: none) {
+  /* Deshabilitar callout en iOS */
+  * {
+    -webkit-touch-callout: none;
+  }
+
+  /* Deshabilitar zoom en doble tap */
+  body {
+    touch-action: manipulation;
+  }
+
+  /* Mejorar renderizado de fuentes */
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* ========================================
+   DARK MODE EN MÓVIL
+   ======================================== */
+
+@media (max-width: 640px) and (prefers-color-scheme: dark) {
+  /* Reducir brillo en dark mode móvil */
+  .container-glass {
+    background-color: rgba(30, 30, 30, 0.95);
+  }
+
+  /* Texto adaptado */
+  .text-primary {
+    color: #f3f4f6;
+  }
+
+  .text-secondary {
+    color: #d1d5db;
+  }
+}
+
+/* ========================================
+   VIEWPORT HEIGHT FIX (Mobile browsers)
+   ======================================== */
+
+/* Fix para altura de viewport en móviles (address bar) */
+@media (max-width: 640px) {
+  .min-h-screen {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
+
+  html {
+    height: -webkit-fill-available;
+  }
+}
+
+/* ========================================
+   ACCESIBILIDAD EN MÓVIL
+   ======================================== */
+
+@media (max-width: 640px) {
+  /* Focus más visible en pantalla táctil */
+  *:focus-visible {
+    outline-width: 3px;
+    outline-offset: 3px;
+  }
+
+  /* Skip links más grandes */
+  .skip-link {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+  }
+}

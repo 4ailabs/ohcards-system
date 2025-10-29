@@ -65,7 +65,7 @@ const ImageSelectionScreen: React.FC<ImageSelectionScreenProps> = ({ onSelect, n
                     </div>
                 </div>
             </div>
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-9 gap-2 sm:gap-3 md:gap-4 max-h-[60vh] sm:max-h-[70vh] md:max-h-[75vh] overflow-y-auto p-2 sm:p-4 rounded-lg bg-black/5">
+            <div className="card-selection-grid grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-9 gap-2 sm:gap-3 md:gap-4 max-h-[65vh] sm:max-h-[70vh] md:max-h-[75vh] overflow-y-auto p-2 sm:p-3 md:p-4 rounded-lg bg-black/5 scroll-smooth">
                 {IMAGE_CARD_URLS.map(url => {
                     const selectionIndex = selected.indexOf(url);
                     const isSelected = selectionIndex !== -1;
