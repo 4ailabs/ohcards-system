@@ -1,5 +1,4 @@
 import React from 'react';
-import { ImageCardBack, WordCardBack } from './CardDisplay';
 
 interface SummaryScreenProps {
     chosenImages: string[];

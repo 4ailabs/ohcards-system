@@ -8,39 +8,6 @@ interface CardDisplayProps {
     chosenWord: string;
 }
 
-const WordCardLayout: React.FC<{ word: string; baseTextSize?: string; showInnerBorder?: boolean }> = ({
-  word,
-  baseTextSize = 'text-lg sm:text-xl md:text-2xl',
-  showInnerBorder = true,
-}) => {
-  const textClasses = 'font-bold whitespace-nowrap uppercase';
-  const outerTextClasses = `absolute ${textClasses}`;
-  const style = { color: '#402E32' };
-
-  return (
-    <div className="relative w-full h-full flex items-center justify-center overflow-hidden bg-white rounded-2xl">
-      {/* Palabra en los cuatro lados, fuera del marco rojo */}
-      <p className={`${outerTextClasses} ${baseTextSize}`} style={{ ...style, top: '3.5%', left: '50%', transform: 'translateX(-50%)' }}>{word}</p>
-      <p className={`${outerTextClasses} ${baseTextSize}`} style={{ ...style, bottom: '3.5%', left: '50%', transform: 'translateX(-50%)' }}>{word}</p>
-      <p className={`${outerTextClasses} ${baseTextSize}`} style={{ ...style, left: '3.5%', top: '50%', transform: 'translateY(-50%) rotate(-90deg)' }}>{word}</p>
-      <p className={`${outerTextClasses} ${baseTextSize}`} style={{ ...style, right: '3.5%', top: '50%', transform: 'translateY(-50%) rotate(90deg)' }}>{word}</p>
-      {/* Marco rojo delgado */}
-      {showInnerBorder && (
-        <div
-          className="absolute border border-red-500 rounded-md pointer-events-none"
-          style={{
-            top: '10%',
-            left: '10%',
-            right: '10%',
-            bottom: '10%',
-            borderWidth: '2.5px'
-          }}
-        ></div>
-      )}
-    </div>
-  );
-};
-
 // Componente reverso verde (imagen)
 export const ImageCardBack: React.FC = () => (
   <svg width="100%" height="100%" viewBox="0 0 300 420" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block', borderRadius: '1rem', border: '4px solid #A5C96A', background: '#fff' }}>

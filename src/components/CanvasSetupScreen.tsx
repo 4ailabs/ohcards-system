@@ -14,7 +14,6 @@ const CanvasSetupScreen: React.FC<CanvasSetupScreenProps> = ({
     const [currentStep, setCurrentStep] = useState<'selecting_pairs' | 'selecting_image' | 'selecting_word'>('selecting_pairs');
     const [canvasPairs, setCanvasPairs] = useState(1);
     const [selectedImages, setSelectedImages] = useState<string[]>([]);
-    const [selectedWords, setSelectedWords] = useState<string[]>([]);
     const canvasPairOptions = [1, 2, 3, 4, 5, 6];
 
     const handleImageSelect = (images: string[]) => {

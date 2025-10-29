@@ -28,10 +28,7 @@ const App: React.FC = () => {
         }
     }, []);
 
-    // Si no está autenticado, mostrar login
-    if (!isAuthenticated) {
-        return <LoginScreen onLogin={() => setIsAuthenticated(true)} />;
-    }
+    // TODOS LOS HOOKS DEBEN IR ANTES DE CUALQUIER RETURN CONDICIONAL
     // Estado persistido con localStorage
     const [gamePhase, setGamePhase] = useLocalStorage<GamePhase>('ohcards-gamePhase', 'start');
     const [situation, setSituation] = useLocalStorage<string>('ohcards-situation', '');
@@ -46,12 +43,14 @@ const App: React.FC = () => {
     const [currentStepIndex, setCurrentStepIndex] = useLocalStorage<number>('ohcards-currentStepIndex', -1);
     const [completedPairs, setCompletedPairs] = useLocalStorage<number[]>('ohcards-completedPairs', []);
 
-
+    // TODOS LOS HOOKS INCLUYENDO useMemo y useCallback DEBEN IR ANTES DEL RETURN CONDICIONAL
     const currentSteps = useMemo(() => {
-        return path ? PROCESS_STEPS[path] : [];
+        if (!path) return [];
+        return PROCESS_STEPS[path];
     }, [path]);
 
     const currentStepKey = useMemo<StepKey | null>(() => {
+        if (!currentSteps || currentStepIndex < 0) return null;
         return currentSteps[currentStepIndex] ?? null;
     }, [currentSteps, currentStepIndex]);
 
@@ -77,7 +76,7 @@ const App: React.FC = () => {
         localStorage.removeItem('ohcards-currentPairIndex');
         localStorage.removeItem('ohcards-currentStepIndex');
         localStorage.removeItem('ohcards-completedPairs');
-    }, [setGamePhase, setSituation, setPath, setInputs, setNumberOfPairs, setChosenImages, setChosenWords, setCurrentPairIndex, setCurrentStepIndex, setCompletedPairs]);
+    }, []);
 
     const handleLogout = useCallback(() => {
         localStorage.removeItem('ohcards-authenticated');
@@ -98,19 +97,6 @@ const App: React.FC = () => {
         setChosenWords(words);
         setGamePhase('choosing_pair');
     }, []);
-
-    const handleCanvasCardSelect = useCallback((cardId: number) => {
-        // Si es selección por par, cardId es el índice del par
-        // Si es selección por orden, cardId es el ID de la carta individual
-        const pairIndex = typeof cardId === 'number' && cardId < numberOfPairs 
-            ? cardId 
-            : Math.floor(cardId / 2);
-        
-        setCurrentPairIndex(pairIndex);
-        setCurrentStepIndex(-1);
-        setPath(null);
-        setGamePhase('choosing_path');
-    }, [numberOfPairs]);
 
     const handleCanvasSetupComplete = useCallback((images: string[], words: string[], numberOfPairs: number) => {
         setChosenImages(images);
@@ -179,6 +165,12 @@ const App: React.FC = () => {
             setGamePhase('choosing_pair');
         }
     }, [gamePhase, currentStepIndex]);
+
+    // AHORA SÍ, después de TODOS los hooks (useState, useMemo, useCallback)
+    // Si no está autenticado, mostrar login
+    if (!isAuthenticated) {
+        return <LoginScreen onLogin={() => setIsAuthenticated(true)} />;
+    }
 
     const renderContent = () => {
         switch (gamePhase) {
