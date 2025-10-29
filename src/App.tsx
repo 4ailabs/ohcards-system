@@ -166,10 +166,19 @@ const App: React.FC = () => {
         }
     }, [gamePhase, currentStepIndex]);
 
-    // AHORA SÍ, después de TODOS los hooks (useState, useMemo, useCallback)
+    // TEMPORALMENTE DESACTIVADO PARA DEBUGGING EN IPHONE
     // Si no está autenticado, mostrar login
+    // if (!isAuthenticated) {
+    //     return <LoginScreen onLogin={() => setIsAuthenticated(true)} />;
+    // }
+    
+    // BYPASS TEMPORAL - Para testing en iPhone
     if (!isAuthenticated) {
-        return <LoginScreen onLogin={() => setIsAuthenticated(true)} />;
+        // Auto-login después de 500ms para debugging
+        setTimeout(() => {
+            setIsAuthenticated(true);
+        }, 500);
+        return null;
     }
 
     const renderContent = () => {
