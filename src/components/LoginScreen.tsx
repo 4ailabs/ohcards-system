@@ -51,13 +51,16 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
                         <div className="relative">
                             <input
                                 id="password"
-                                type={showPassword ? "text" : "password"}
+                                type="text"
+                                inputMode="text"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 onFocus={(e) => e.target.scrollIntoView({ block: 'center' })}
+                                onTouchStart={(e) => e.stopPropagation()}
+                                onClick={(e) => e.preventDefault()}
                                 className="w-full px-4 py-3 pr-12 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
                                 placeholder="Ingresa tu contraseña"
-                                style={{ fontSize: '16px', minHeight: '48px', touchAction: 'auto', WebkitUserSelect: 'text' }}
+                                style={{ fontSize: '16px', minHeight: '48px', WebkitAppearance: 'none', WebkitUserSelect: 'text' }}
                                 autoComplete="current-password"
                                 required
                             />
