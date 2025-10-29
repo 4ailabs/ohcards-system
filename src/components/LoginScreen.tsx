@@ -56,8 +56,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 className="w-full px-4 py-3 pr-12 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
                                 placeholder="Ingresa tu contraseña"
-                                style={{ fontSize: '16px' }}
-                                autoFocus
+                                style={{ fontSize: '16px', minHeight: '48px' }}
+                                autoComplete="current-password"
                                 required
                             />
                             <button
