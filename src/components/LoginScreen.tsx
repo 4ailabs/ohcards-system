@@ -54,16 +54,17 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
                                 type={showPassword ? "text" : "password"}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
+                                onFocus={(e) => e.target.scrollIntoView({ block: 'center' })}
                                 className="w-full px-4 py-3 pr-12 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
                                 placeholder="Ingresa tu contraseña"
-                                style={{ fontSize: '16px', minHeight: '48px' }}
+                                style={{ fontSize: '16px', minHeight: '48px', touchAction: 'auto', WebkitUserSelect: 'text' }}
                                 autoComplete="current-password"
                                 required
                             />
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-2 top-1/2 transform -translate-y-1/2 px-3 py-1 text-sm text-gray-600 hover:text-gray-800 transition-colors"
+                                className="absolute right-2 top-1/2 transform -translate-y-1/2 px-3 py-2 text-sm text-gray-600 hover:text-gray-800 transition-colors z-10 bg-white"
                                 aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
                             >
                                 {showPassword ? 'Ocultar' : 'Ver'}
