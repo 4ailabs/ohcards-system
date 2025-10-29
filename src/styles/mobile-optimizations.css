@@ -233,12 +233,32 @@
     min-height: 120px;
     font-size: 16px; /* Previene zoom en iOS */
     line-height: 1.5;
+    /* Asegurar interactividad en iOS */
+    -webkit-user-select: text !important;
+    user-select: text !important;
+    touch-action: auto !important;
+    -webkit-touch-callout: default !important;
+    /* Prevenir problemas de renderizado en iOS */
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  /* Input más grande */
+  input {
+    font-size: 16px; /* Previene zoom en iOS */
+    /* Asegurar interactividad en iOS */
+    -webkit-user-select: text !important;
+    user-select: text !important;
+    touch-action: auto !important;
+    -webkit-touch-callout: default !important;
   }
 
   /* Select más grande */
   select {
     min-height: 44px;
     font-size: 16px;
+    /* Asegurar interactividad en iOS */
+    touch-action: auto !important;
   }
 
   /* Input de búsqueda */

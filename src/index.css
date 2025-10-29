@@ -15,13 +15,20 @@ body {
   color: #402E32;
   background-image: linear-gradient(135deg, #4B2E19 0%, #FFD600 100%);
   background-attachment: fixed;
-  touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 
 /* Mejoras para touch targets en móviles */
-button, input, textarea, select {
+button {
   touch-action: manipulation;
+  min-height: 44px; /* Apple's recommended minimum touch target size */
+}
+
+/* Asegurar que inputs/textareas sean interactivos en iOS */
+input, textarea, select {
+  touch-action: auto;
+  -webkit-user-select: text;
+  user-select: text;
   min-height: 44px; /* Apple's recommended minimum touch target size */
 }
 
