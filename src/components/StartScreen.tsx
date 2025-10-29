@@ -5,26 +5,27 @@ interface StartScreenProps {
     onSituationChange: (value: string) => void;
     onStart: (pairCount: number) => void;
     onGoToCanvas: () => void;
+    onLogout: () => void;
 }
 
-const StartScreen: React.FC<StartScreenProps> = ({ situation, onSituationChange, onStart, onGoToCanvas }) => {
+const StartScreen: React.FC<StartScreenProps> = ({ situation, onSituationChange, onStart, onGoToCanvas, onLogout }) => {
     const [pairCount, setPairCount] = useState(1);
     const pairOptions = [1, 3, 5];
 
     return (
         <div className="w-full max-w-4xl mx-auto p-3 sm:p-4 md:p-6 lg:p-8">
             {/* Header */}
-            <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-4 sm:p-6 mb-4 sm:mb-6">
+            <div className="container-glass">
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">
                     Simulador OH Cards
                 </h1>
-                <p className="text-sm sm:text-base text-gray-600 text-center mb-4 sm:mb-6">
+                <p className="text-sm sm:text-base text-secondary text-center mb-4 sm:mb-6">
                     Explora tus pensamientos y emociones a través de las cartas proyectivas
                 </p>
             </div>
 
             {/* Situación */}
-            <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-4 sm:p-6 mb-4 sm:mb-6">
+            <div className="container-glass">
                 <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3 sm:mb-4 text-center">
                     ¿Qué situación quieres explorar?
                 </h2>
@@ -32,13 +33,14 @@ const StartScreen: React.FC<StartScreenProps> = ({ situation, onSituationChange,
                     value={situation}
                     onChange={(e) => onSituationChange(e.target.value)}
                     placeholder="Describe brevemente la situación, emoción o tema que quieres explorar..."
-                    className="w-full p-3 sm:p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none text-sm sm:text-base"
+                    className="w-full p-3 sm:p-4 border border-gray-300 rounded-lg resize-none text-sm sm:text-base"
                     rows={4}
+                    aria-label="Describe la situación que quieres explorar"
                 />
             </div>
 
             {/* Selección de pares */}
-            <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-4 sm:p-6 mb-4 sm:mb-6">
+            <div className="container-glass">
                 <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3 sm:mb-4 text-center">
                     ¿Cuántos pares de cartas quieres usar?
                 </h2>
@@ -48,11 +50,13 @@ const StartScreen: React.FC<StartScreenProps> = ({ situation, onSituationChange,
                             key={count}
                             type="button"
                             onClick={() => setPairCount(count)}
-                            className={`px-4 sm:px-6 py-3 sm:py-4 rounded-full font-semibold text-sm sm:text-base transition-all duration-200 shadow-lg hover:scale-105 ${
-                                pairCount === count 
-                                    ? 'btn-action' 
+                            className={`btn ${
+                                pairCount === count
+                                    ? 'btn-primary'
                                     : 'btn-secondary'
                             }`}
+                            aria-pressed={pairCount === count}
+                            aria-label={`Seleccionar ${count} ${count > 1 ? 'pares' : 'par'} de cartas`}
                         >
                             {count} {count > 1 ? 'Pares' : 'Par'}
                         </button>
@@ -65,16 +69,30 @@ const StartScreen: React.FC<StartScreenProps> = ({ situation, onSituationChange,
                 <button
                     type="button"
                     onClick={() => onStart(pairCount)}
-                    className="btn-action px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg shadow-xl hover:scale-105 transition-transform duration-200 w-full sm:w-auto"
+                    className="btn btn-primary btn-lg w-full sm:w-auto"
+                    aria-label="Iniciar proceso completo con las cartas seleccionadas"
                 >
                     Proceso Completo
                 </button>
                 <button
                     type="button"
                     onClick={onGoToCanvas}
-                    className="btn-secondary px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg shadow-xl hover:scale-105 transition-transform duration-200 w-full sm:w-auto"
+                    className="btn btn-secondary btn-lg w-full sm:w-auto"
+                    aria-label="Ir solo al lienzo de cartas"
                 >
                     Solo Lienzo de Cartas
+                </button>
+            </div>
+
+            {/* Botón de logout */}
+            <div className="flex justify-center mt-6">
+                <button
+                    type="button"
+                    onClick={onLogout}
+                    className="btn btn-secondary text-sm"
+                    aria-label="Cerrar sesión"
+                >
+                    Cerrar Sesión
                 </button>
             </div>
         </div>

@@ -1,0 +1,585 @@
+/**
+ * Components - OH Cards System
+ *
+ * Estilos de componentes consolidados y optimizados
+ * Elimina duplicación y usa design tokens
+ */
+
+/* ========================================
+   BOTONES - Sistema unificado
+   ======================================== */
+
+/* Base común para todos los botones */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-bold);
+  border-radius: var(--border-radius-full);
+  transition: var(--transition-all);
+  touch-action: manipulation;
+  user-select: none;
+  min-height: var(--touch-target-min);
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+}
+
+/* Botón primario (principal) */
+.btn-primary {
+  background-color: var(--color-btn-primary-bg);
+  color: var(--color-btn-primary-text);
+  box-shadow: var(--shadow-card);
+  padding: var(--spacing-3) var(--spacing-8);
+  font-size: var(--font-size-lg);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-btn-primary-hover);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.btn-primary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-primary:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus-visible);
+}
+
+/* Botón secundario */
+.btn-secondary {
+  background-color: var(--color-btn-secondary-bg);
+  color: var(--color-btn-secondary-text);
+  border: var(--border-width-medium) solid var(--color-btn-secondary-border);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-3) var(--spacing-8);
+  font-size: var(--font-size-lg);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-btn-secondary-hover-bg);
+  color: var(--color-brown-700);
+  border-color: var(--color-btn-secondary-hover-border);
+  transform: translateY(-2px) scale(1.04);
+}
+
+.btn-secondary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-secondary:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus-visible);
+}
+
+/* Botón outline (variante) */
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-btn-primary-bg);
+  border: var(--border-width-medium) solid var(--color-btn-primary-bg);
+  padding: var(--spacing-3) var(--spacing-8);
+  font-size: var(--font-size-lg);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-btn-primary-bg);
+  color: var(--color-white);
+}
+
+.btn-outline:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus-visible);
+}
+
+/* Tamaños de botones */
+.btn-sm {
+  padding: var(--spacing-2) var(--spacing-4);
+  font-size: var(--font-size-sm);
+  min-height: 36px;
+}
+
+.btn-md {
+  padding: var(--spacing-3) var(--spacing-6);
+  font-size: var(--font-size-base);
+}
+
+.btn-lg {
+  padding: var(--spacing-4) var(--spacing-10);
+  font-size: var(--font-size-xl);
+}
+
+/* Estado deshabilitado */
+.btn:disabled,
+.btn[disabled] {
+  opacity: var(--opacity-50);
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* ========================================
+   CARDS - Sistema unificado
+   ======================================== */
+
+.card {
+  background-color: var(--color-bg-surface);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: var(--transition-all);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: scale(1.02);
+}
+
+/* Proporción estándar de cartas OH (2:3 - más alta que ancha) */
+.card-oh {
+  aspect-ratio: 2 / 3;
+  width: 100%;
+}
+
+/* Tamaños predefinidos para cartas OH */
+.card-oh-sm {
+  width: 5rem; /* 80px */
+  aspect-ratio: 2 / 3;
+}
+
+.card-oh-md {
+  width: 6rem; /* 96px */
+  aspect-ratio: 2 / 3;
+}
+
+.card-oh-lg {
+  width: 8rem; /* 128px */
+  aspect-ratio: 2 / 3;
+}
+
+.card-oh-xl {
+  width: 10rem; /* 160px */
+  aspect-ratio: 2 / 3;
+}
+
+/* Responsive card sizes */
+@media (min-width: 640px) {
+  .card-oh-sm { width: 6rem; }
+  .card-oh-md { width: 7rem; }
+  .card-oh-lg { width: 9rem; }
+  .card-oh-xl { width: 12rem; }
+}
+
+@media (min-width: 768px) {
+  .card-oh-sm { width: 7rem; }
+  .card-oh-md { width: 8rem; }
+  .card-oh-lg { width: 10rem; }
+  .card-oh-xl { width: 14rem; }
+}
+
+@media (min-width: 1024px) {
+  .card-oh-sm { width: 8rem; }
+  .card-oh-md { width: 9rem; }
+  .card-oh-lg { width: 11rem; }
+  .card-oh-xl { width: 16rem; }
+}
+
+/* Card con backdrop blur (efecto glassmorphism) */
+.card-glass {
+  background-color: var(--color-bg-overlay);
+  backdrop-filter: blur(var(--blur-md));
+  border-radius: var(--border-radius-2xl);
+  box-shadow: var(--shadow-xl);
+  padding: var(--spacing-4);
+}
+
+/* Card de selección interactiva */
+.card-selectable {
+  cursor: pointer;
+  transition: var(--transition-all);
+  position: relative;
+}
+
+.card-selectable:hover {
+  transform: scale(1.05);
+}
+
+.card-selectable:active {
+  transform: scale(0.95);
+}
+
+.card-selectable:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus-visible);
+}
+
+/* ========================================
+   CONTENEDORES
+   ======================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--container-6xl);
+  margin-left: auto;
+  margin-right: auto;
+  padding: var(--spacing-4);
+}
+
+.container-glass {
+  background-color: var(--color-bg-overlay);
+  backdrop-filter: blur(var(--blur-md));
+  border-radius: var(--border-radius-2xl);
+  box-shadow: var(--shadow-xl);
+  padding: var(--spacing-4);
+  margin-bottom: var(--spacing-4);
+}
+
+/* ========================================
+   INPUTS Y TEXTAREAS
+   ======================================== */
+
+input,
+textarea,
+select {
+  font-family: var(--font-family-primary);
+  background-color: var(--color-bg-surface);
+  border: var(--border-width-thin) solid var(--color-border-light);
+  border-radius: var(--border-radius-base);
+  padding: var(--spacing-3);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  min-height: var(--touch-target-min);
+  transition: var(--transition-all);
+  width: 100%;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-focus-ring);
+  box-shadow: 0 0 0 2px rgba(211, 122, 71, 0.2);
+}
+
+/* Focus visible para navegación por teclado */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: none;
+  border-color: var(--color-focus-ring);
+  box-shadow: var(--shadow-focus-visible);
+  /* Indicador adicional visible */
+  position: relative;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Placeholder styling */
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-text-secondary);
+  opacity: var(--opacity-60);
+}
+
+/* ========================================
+   GRIDS RESPONSIVOS
+   ======================================== */
+
+.grid-responsive {
+  display: grid;
+  gap: var(--spacing-3);
+  justify-items: center;
+}
+
+@media (min-width: 640px) {
+  .grid-responsive {
+    gap: var(--spacing-4);
+  }
+}
+
+/* ========================================
+   ANIMACIONES
+   ======================================== */
+
+.fade-in {
+  animation: fadeIn 0.5s var(--ease-in-out);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-in-right {
+  animation: slideInRight 0.3s var(--ease-out);
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ========================================
+   UTILIDADES DE TEXTO
+   ======================================== */
+
+.text-primary {
+  color: var(--color-text-primary);
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-tertiary {
+  color: var(--color-text-tertiary);
+}
+
+/* ========================================
+   FOCUS RING GLOBAL (Accesibilidad)
+   ======================================== */
+
+/* Asegurar que todos los elementos interactivos tengan focus visible */
+*:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Para elementos que ya tienen su propio estilo de focus */
+.btn:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+.card-selectable:focus-visible {
+  outline: none; /* Ya tienen su box-shadow personalizado */
+}
+
+/* ========================================
+   INDICADORES DE PROGRESO
+   ======================================== */
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: var(--color-gray-200);
+  border-radius: var(--border-radius-full);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-orange-500), var(--color-yellow-500));
+  transition: width var(--transition-slow) var(--ease-out);
+}
+
+/* ========================================
+   BADGES Y ETIQUETAS
+   ======================================== */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+.badge-success {
+  background-color: var(--color-success-light);
+  color: var(--color-white);
+}
+
+.badge-warning {
+  background-color: var(--color-warning);
+  color: var(--color-white);
+}
+
+.badge-info {
+  background-color: var(--color-info);
+  color: var(--color-white);
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+/* Ajustes para móviles pequeños */
+@media (max-width: 480px) {
+  .btn-primary,
+  .btn-secondary {
+    padding: var(--spacing-4) var(--spacing-5);
+    font-size: var(--font-size-base);
+  }
+
+  .container-glass {
+    padding: var(--spacing-3);
+  }
+
+  .fade-in {
+    animation-duration: 0.6s;
+  }
+}
+
+/* Ajustes para móviles */
+@media (max-width: 640px) {
+  .container {
+    padding: var(--spacing-3);
+  }
+
+  .container-glass {
+    padding: var(--spacing-4);
+    margin-bottom: var(--spacing-4);
+  }
+
+  textarea {
+    font-size: var(--font-size-base); /* Previene zoom en iOS */
+    padding: var(--spacing-3);
+  }
+}
+
+/* Ajustes para tablets */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .container {
+    padding: var(--spacing-6);
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    padding: var(--spacing-3) var(--spacing-7);
+    font-size: calc(var(--font-size-lg) * 0.95);
+  }
+}
+
+/* Ajustes para desktop */
+@media (min-width: 1025px) {
+  .container {
+    padding: var(--spacing-8);
+  }
+}
+
+/* ========================================
+   HOVER LIMITADO (Touch devices)
+   ======================================== */
+
+@media (hover: none) {
+  .btn-primary:hover,
+  .btn-secondary:hover,
+  .btn-outline:hover {
+    transform: none;
+  }
+
+  .btn-primary:active,
+  .btn-secondary:active,
+  .btn-outline:active {
+    transform: scale(0.98);
+  }
+
+  .card:hover {
+    transform: none;
+  }
+}
+
+/* ========================================
+   MODO OSCURO (Sistema)
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  .btn-secondary {
+    background-color: #f8f8f8;
+    color: var(--color-brown-700);
+  }
+}
+
+/* ========================================
+   REDUCED MOTION (Accesibilidad)
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .btn:hover,
+  .card:hover {
+    transform: none;
+  }
+}
+
+/* ========================================
+   HIGH CONTRAST (Accesibilidad)
+   ======================================== */
+
+@media (prefers-contrast: high) {
+  .btn-primary,
+  .btn-secondary,
+  input,
+  textarea {
+    border-width: var(--border-width-thick);
+  }
+
+  *:focus-visible {
+    outline-width: 4px;
+  }
+}
+
+/* ========================================
+   COMPATIBILIDAD LEGACY (Temporal)
+   ======================================== */
+
+/* Mapear clase antigua .btn-action a nuevo sistema */
+.btn-action {
+  background-color: var(--color-btn-primary-bg);
+  color: var(--color-btn-primary-text);
+  box-shadow: var(--shadow-card);
+  padding: var(--spacing-3) var(--spacing-8);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  border-radius: var(--border-radius-full);
+  transition: var(--transition-all);
+  touch-action: manipulation;
+  user-select: none;
+  min-height: var(--touch-target-min);
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-action:hover {
+  background-color: var(--color-btn-primary-hover);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.btn-action:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-action:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus-visible);
+}

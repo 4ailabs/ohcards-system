@@ -104,32 +104,37 @@ const CanvasScreen: React.FC<CanvasScreenProps> = ({
                     {isImage ? 'I' : 'P'}
                 </div>
 
-                {/* Carta */}
-                <div className={`w-24 h-32 sm:w-28 sm:h-36 md:w-32 md:h-40 lg:w-36 lg:h-44 bg-white rounded-lg overflow-hidden border-2 ${
-                    isImage ? 'border-green-500' : 'border-amber-700'
-                }`}>
-                    {card.isFlipped ? (
-                        isImage ? (
-                            <img 
-                                src={card.content} 
-                                alt={`Imagen ${pairNumber}`}
-                                className="w-full h-full object-cover"
-                            />
-                        ) : (
-                            <div className="w-full h-full flex items-center justify-center p-2 sm:p-3">
-                                <div className="text-center">
-                                    <div className="text-xs sm:text-sm font-bold text-gray-800 mb-1">
-                                        Palabra {pairNumber}
-                                    </div>
-                                    <div className="text-xs sm:text-sm text-gray-600 leading-tight">
-                                        {card.content}
+                {/* Carta - Proporción 2:3 como carta real */}
+                <div className="card-oh-md sm:card-oh-lg lg:card-oh-xl">
+                    <div className={`w-full h-full bg-white rounded-lg overflow-hidden border-2 ${
+                        isImage ? 'border-green-500' : 'border-amber-700'
+                    }`}>
+                        {card.isFlipped ? (
+                            isImage ? (
+                                <img
+                                    src={card.content}
+                                    alt={`Imagen ${pairNumber}`}
+                                    className="w-full h-full object-cover"
+                                />
+                            ) : (
+                                <div className="w-full h-full flex items-center justify-center p-2 relative bg-white rounded-lg">
+                                    {/* Palabra en layout de carta OH */}
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        {/* Palabra en los 4 lados */}
+                                        <span className="absolute top-2 left-1/2 transform -translate-x-1/2 text-xs sm:text-sm font-bold text-gray-800 uppercase">{card.content}</span>
+                                        <span className="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-xs sm:text-sm font-bold text-gray-800 uppercase">{card.content}</span>
+                                        <span className="absolute left-2 top-1/2 transform -translate-y-1/2 -rotate-90 text-xs sm:text-sm font-bold text-gray-800 uppercase">{card.content}</span>
+                                        <span className="absolute right-2 top-1/2 transform -translate-y-1/2 rotate-90 text-xs sm:text-sm font-bold text-gray-800 uppercase">{card.content}</span>
+
+                                        {/* Marco rojo interior */}
+                                        <div className="absolute border-2 border-red-500 rounded" style={{ top: '15%', left: '15%', right: '15%', bottom: '15%' }}></div>
                                     </div>
                                 </div>
-                            </div>
-                        )
-                    ) : (
-                        isImage ? <ImageCardBack /> : <WordCardBack />
-                    )}
+                            )
+                        ) : (
+                            isImage ? <ImageCardBack /> : <WordCardBack />
+                        )}
+                    </div>
                 </div>
 
                 {/* Botón de selección */}
@@ -141,40 +146,10 @@ const CanvasScreen: React.FC<CanvasScreenProps> = ({
                     className={`absolute -bottom-2 -right-2 w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg ${
                         card.isSelected ? 'bg-blue-600' : 'bg-gray-400'
                     }`}
+                    aria-label={card.isSelected ? 'Deseleccionar carta' : 'Seleccionar carta'}
                 >
-                    {card.isSelected ? '✓' : '+'}
+                    {card.isSelected ? 'S' : 'S'}
                 </button>
-            </div>
-        );
-    };
-
-    const renderPairSelector = () => {
-        return (
-            <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-4 sm:p-6 mb-6">
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4 text-center">
-                    Seleccionar por Pares
-                </h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3">
-                    {Array.from({ length: numberOfPairs }, (_, i) => {
-                        const imageCard = cards.find(c => c.id === i * 2);
-                        const wordCard = cards.find(c => c.id === i * 2 + 1);
-                        const isPairSelected = imageCard?.isSelected && wordCard?.isSelected;
-                        
-                        return (
-                            <button
-                                key={i}
-                                onClick={() => handlePairSelect(i)}
-                                className={`p-3 sm:p-4 rounded-lg text-sm sm:text-base font-medium transition-all duration-200 ${
-                                    isPairSelected 
-                                        ? 'bg-blue-600 text-white shadow-lg' 
-                                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                                }`}
-                            >
-                                Par {i + 1}
-                            </button>
-                        );
-                    })}
-                </div>
             </div>
         );
     };
@@ -208,16 +183,48 @@ const CanvasScreen: React.FC<CanvasScreenProps> = ({
             </div>
 
             {/* Selector de pares */}
-            {renderPairSelector()}
+            <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-4 sm:p-6 mb-6 overflow-x-auto">
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4 text-center">
+                    Seleccionar por Pares
+                </h3>
+                <div className={`grid gap-3 sm:gap-4 ${
+                    numberOfPairs <= 4 ? 'grid-cols-2 sm:grid-cols-4' :
+                    numberOfPairs <= 6 ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6' :
+                    numberOfPairs <= 8 ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-8' :
+                    'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8'
+                }`}>
+                    {Array.from({ length: numberOfPairs }, (_, i) => {
+                        const imageCard = cards.find(c => c.id === i * 2);
+                        const wordCard = cards.find(c => c.id === i * 2 + 1);
+                        const isPairSelected = imageCard?.isSelected && wordCard?.isSelected;
+                        
+                        return (
+                            <button
+                                key={i}
+                                onClick={() => handlePairSelect(i)}
+                                className={`p-3 sm:p-4 rounded-lg text-sm sm:text-base font-medium transition-all duration-200 ${
+                                    isPairSelected 
+                                        ? 'bg-blue-600 text-white shadow-lg' 
+                                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                }`}
+                            >
+                                Par {i + 1}
+                            </button>
+                        );
+                    })}
+                </div>
+            </div>
 
             {/* Grid de cartas */}
-            <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-4 sm:p-6 mb-4 sm:mb-6">
-                <div className={`grid gap-3 sm:gap-4 justify-items-center ${
-                    numberOfPairs <= 2 ? 'grid-cols-2 sm:grid-cols-4' :
-                    numberOfPairs <= 3 ? 'grid-cols-3 sm:grid-cols-6' :
-                    numberOfPairs <= 4 ? 'grid-cols-4 sm:grid-cols-6 md:grid-cols-8' :
-                    numberOfPairs <= 5 ? 'grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10' :
-                    'grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-12'
+            <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-4 sm:p-6 mb-4 sm:mb-6 overflow-x-auto">
+                <div className={`grid gap-4 sm:gap-5 md:gap-6 justify-items-center ${
+                    numberOfPairs <= 2 ? 'grid-cols-2 sm:grid-cols-2 md:grid-cols-4' :
+                    numberOfPairs <= 3 ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6' :
+                    numberOfPairs <= 4 ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-8' :
+                    numberOfPairs <= 5 ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5' :
+                    numberOfPairs <= 6 ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6' :
+                    numberOfPairs <= 7 ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6' :
+                    'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8'
                 }`}>
                     {cards.map(renderCard)}
                 </div>

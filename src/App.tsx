@@ -1,6 +1,8 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { PROCESS_STEPS, STEP_DETAILS } from './constants';
 import type { GamePhase, AllInputs, ProcessPath, StepKey } from './types';
+import useLocalStorage from './hooks/useLocalStorage';
+import LoginScreen from './components/LoginScreen';
 import StartScreen from './components/StartScreen';
 import ProgressBar from './components/ProgressBar';
 import CardDisplay from './components/CardDisplay';
@@ -15,18 +17,34 @@ import SummaryScreen from './components/SummaryScreen';
 const isEmbedded = window.self !== window.top;
 
 const App: React.FC = () => {
-    const [gamePhase, setGamePhase] = useState<GamePhase>('start');
-    const [situation, setSituation] = useState<string>('');
-    const [path, setPath] = useState<ProcessPath | null>(null);
-    const [inputs, setInputs] = useState<AllInputs>({});
+    // Estado de autenticación
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
-    // Multi-card state
-    const [numberOfPairs, setNumberOfPairs] = useState<number>(1);
-    const [chosenImages, setChosenImages] = useState<string[]>([]);
-    const [chosenWords, setChosenWords] = useState<string[]>([]);
-    const [currentPairIndex, setCurrentPairIndex] = useState<number>(0);
-    const [currentStepIndex, setCurrentStepIndex] = useState<number>(-1);
-    const [completedPairs, setCompletedPairs] = useState<number[]>([]);
+    // Verificar si ya está autenticado al cargar
+    useEffect(() => {
+        const authenticated = localStorage.getItem('ohcards-authenticated');
+        if (authenticated === 'true') {
+            setIsAuthenticated(true);
+        }
+    }, []);
+
+    // Si no está autenticado, mostrar login
+    if (!isAuthenticated) {
+        return <LoginScreen onLogin={() => setIsAuthenticated(true)} />;
+    }
+    // Estado persistido con localStorage
+    const [gamePhase, setGamePhase] = useLocalStorage<GamePhase>('ohcards-gamePhase', 'start');
+    const [situation, setSituation] = useLocalStorage<string>('ohcards-situation', '');
+    const [path, setPath] = useLocalStorage<ProcessPath | null>('ohcards-path', null);
+    const [inputs, setInputs] = useLocalStorage<AllInputs>('ohcards-inputs', {});
+
+    // Multi-card state persistido
+    const [numberOfPairs, setNumberOfPairs] = useLocalStorage<number>('ohcards-numberOfPairs', 1);
+    const [chosenImages, setChosenImages] = useLocalStorage<string[]>('ohcards-chosenImages', []);
+    const [chosenWords, setChosenWords] = useLocalStorage<string[]>('ohcards-chosenWords', []);
+    const [currentPairIndex, setCurrentPairIndex] = useLocalStorage<number>('ohcards-currentPairIndex', 0);
+    const [currentStepIndex, setCurrentStepIndex] = useLocalStorage<number>('ohcards-currentStepIndex', -1);
+    const [completedPairs, setCompletedPairs] = useLocalStorage<number[]>('ohcards-completedPairs', []);
 
 
     const currentSteps = useMemo(() => {
@@ -48,6 +66,22 @@ const App: React.FC = () => {
         setCurrentPairIndex(0);
         setCurrentStepIndex(-1);
         setCompletedPairs([]);
+        // Limpiar localStorage
+        localStorage.removeItem('ohcards-gamePhase');
+        localStorage.removeItem('ohcards-situation');
+        localStorage.removeItem('ohcards-path');
+        localStorage.removeItem('ohcards-inputs');
+        localStorage.removeItem('ohcards-numberOfPairs');
+        localStorage.removeItem('ohcards-chosenImages');
+        localStorage.removeItem('ohcards-chosenWords');
+        localStorage.removeItem('ohcards-currentPairIndex');
+        localStorage.removeItem('ohcards-currentStepIndex');
+        localStorage.removeItem('ohcards-completedPairs');
+    }, [setGamePhase, setSituation, setPath, setInputs, setNumberOfPairs, setChosenImages, setChosenWords, setCurrentPairIndex, setCurrentStepIndex, setCompletedPairs]);
+
+    const handleLogout = useCallback(() => {
+        localStorage.removeItem('ohcards-authenticated');
+        setIsAuthenticated(false);
     }, []);
 
     const handleStart = useCallback((pairCount: number) => {
@@ -154,6 +188,7 @@ const App: React.FC = () => {
                     onSituationChange={setSituation}
                     onStart={handleStart}
                     onGoToCanvas={handleGoToCanvas}
+                    onLogout={handleLogout}
                 />;
             case 'selecting_image':
                 return <ImageSelectionScreen onSelect={handleImageSelect} numberOfPairs={numberOfPairs} />;

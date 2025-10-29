@@ -1,0 +1,202 @@
+/**
+ * Main Stylesheet - OH Cards System
+ *
+ * Sistema de estilos consolidado y optimizado
+ * Importa tokens y componentes para mantener organización
+ */
+
+/* Tailwind base */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design Tokens (variables CSS) */
+@import './styles/tokens.css';
+
+/* Componentes consolidados */
+@import './styles/components.css';
+
+/* ========================================
+   ESTILOS BASE
+   ======================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--color-text-primary);
+  background-image: linear-gradient(135deg, #4B2E19 0%, #FFD600 100%);
+  background-attachment: fixed;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ========================================
+   MEJORAS PARA TOUCH TARGETS
+   ======================================== */
+
+button,
+input,
+textarea,
+select {
+  touch-action: manipulation;
+  min-height: var(--touch-target-min);
+}
+
+/* ========================================
+   TIPOGRAFÍA BASE
+   ======================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  margin-top: 0;
+}
+
+h1 {
+  font-size: var(--font-size-4xl);
+}
+
+h2 {
+  font-size: var(--font-size-3xl);
+}
+
+h3 {
+  font-size: var(--font-size-2xl);
+}
+
+h4 {
+  font-size: var(--font-size-xl);
+}
+
+h5 {
+  font-size: var(--font-size-lg);
+}
+
+h6 {
+  font-size: var(--font-size-base);
+}
+
+p {
+  line-height: var(--line-height-relaxed);
+  margin-top: 0;
+}
+
+/* Responsive typography */
+@media (max-width: 640px) {
+  h1 {
+    font-size: var(--font-size-3xl);
+  }
+
+  h2 {
+    font-size: var(--font-size-2xl);
+  }
+
+  h3 {
+    font-size: var(--font-size-xl);
+  }
+}
+
+/* ========================================
+   SCROLL SUAVE
+   ======================================== */
+
+.scroll-container {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* ========================================
+   UTILIDADES ESPECÍFICAS DE LA APP
+   ======================================== */
+
+/* Clases legacy mantenidas para compatibilidad */
+.btn-action {
+  @apply btn-primary;
+}
+
+/* Espaciado responsivo */
+@media (min-width: 640px) {
+  .container {
+    padding: var(--spacing-4);
+  }
+
+  .container-glass {
+    padding: var(--spacing-6);
+    margin-bottom: var(--spacing-6);
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: var(--spacing-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding: var(--spacing-8);
+  }
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+
+  .btn,
+  button {
+    display: none;
+  }
+
+  .container-glass {
+    background: white;
+    box-shadow: none;
+    border: 1px solid #ccc;
+  }
+}
+
+/* ========================================
+   CUSTOM SCROLLBAR (Opcional)
+   ======================================== */
+
+/* Para navegadores webkit */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-gray-100);
+  border-radius: var(--border-radius-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gray-400);
+  border-radius: var(--border-radius-base);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gray-500);
+}
+
+/* Para Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gray-400) var(--color-gray-100);
+}

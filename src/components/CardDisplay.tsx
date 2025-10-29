@@ -1,4 +1,4 @@
-import React, { useId } from 'react';
+import React from 'react';
 import type { GamePhase, StepKey } from '../types';
 
 interface CardDisplayProps {
@@ -93,10 +93,10 @@ const CardDisplay: React.FC<CardDisplayProps> = ({ gamePhase, currentStepKey, ch
     if (gamePhase === 'choosing_path') {
         return (
             <div className="absolute inset-0 flex gap-2 sm:gap-4 items-center justify-center">
-                <div className="w-32 h-44 sm:w-40 sm:h-56 md:w-48 md:h-64">
+                <div className="w-32 h-48 sm:w-40 sm:h-60 md:w-48 md:h-72">
                     <ImageCardBack />
                 </div>
-                <div className="w-32 h-44 sm:w-40 sm:h-56 md:w-48 md:h-64">
+                <div className="w-32 h-48 sm:w-40 sm:h-60 md:w-48 md:h-72">
                     <WordCardBack />
                 </div>
             </div>

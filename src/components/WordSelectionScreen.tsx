@@ -41,33 +41,57 @@ const WordSelectionScreen: React.FC<WordSelectionScreenProps> = ({ onSelect, num
 
     return (
         <div className="w-full max-w-7xl mx-auto text-center fade-in p-2 sm:p-4">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2" style={{ color: '#FFFBE6', textShadow: '0 2px 8px rgba(64,46,50,0.18)' }}>
-                Selecciona tus {numberOfPairs} {numberOfPairs > 1 ? 'cartas' : 'carta'} de palabra en orden
-            </h2>
-             <p className="mt-0 mb-4 sm:mb-6 text-sm sm:text-base" style={{ color: '#5D4333' }}>
-                ({selected.length}/{numberOfPairs}) seleccionadas. La 1ª palabra irá con la 1ª imagen, y así sucesivamente.
-             </p>
+            {/* Header mejorado */}
+            <div className="container-glass mb-4 sm:mb-6">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 text-gray-800">
+                    Selecciona tus {numberOfPairs} {numberOfPairs > 1 ? 'cartas' : 'carta'} de palabra
+                </h2>
+                <p className="text-sm sm:text-base text-secondary mb-2">
+                    La 1ª palabra irá con la 1ª imagen, y así sucesivamente
+                </p>
+                {/* Progress indicator mejorado */}
+                <div className="mt-3">
+                    <div className="flex items-center justify-center gap-2 mb-2">
+                        <span className="text-lg font-bold text-yellow-700">
+                            {selected.length} / {numberOfPairs}
+                        </span>
+                        <span className="text-sm text-secondary">seleccionadas</span>
+                    </div>
+                    <div className="progress-bar">
+                        <div
+                            className="h-2 bg-gradient-to-r from-yellow-600 to-yellow-700 rounded-full transition-all duration-300"
+                            style={{ width: `${(selected.length / numberOfPairs) * 100}%` }}
+                        />
+                    </div>
+                </div>
+            </div>
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-9 gap-2 sm:gap-3 md:gap-4 max-h-[60vh] sm:max-h-[70vh] md:max-h-[75vh] overflow-y-auto p-2 sm:p-4 rounded-lg bg-black/5">
                 {WORD_CARD_DATA.map(word => {
                     const selectionIndex = selected.indexOf(word);
                     const isSelected = selectionIndex !== -1;
                     return (
-                        <div 
-                            key={word} 
-                            onClick={() => handleToggleSelect(word)} 
+                        <button
+                            key={word}
+                            onClick={() => handleToggleSelect(word)}
                             className={`relative cursor-pointer aspect-[2/3] rounded-lg shadow-md flex items-center justify-center p-1 touch-manipulation transition-all duration-200 hover:scale-105 hover:shadow-xl ${
                                 isSelected ? 'scale-105 ring-2 sm:ring-4 ring-offset-1 sm:ring-offset-2 ring-[#D37A47]' : ''
                             }`}
-                            aria-label="Carta de palabra boca abajo"
+                            aria-label={isSelected ? `Carta de palabra ${selectionIndex + 1}, presiona para deseleccionar` : "Carta de palabra boca abajo, presiona para seleccionar"}
                             aria-pressed={isSelected}
+                            type="button"
                         >
                             <WordCardBack />
                             {isSelected && (
-                                <div className="absolute top-1 right-1 sm:top-1.5 sm:right-1.5 w-5 h-5 sm:w-7 sm:h-7 bg-white rounded-full flex items-center justify-center text-[#402E32] font-bold text-xs sm:text-base shadow-lg ring-1 sm:ring-2 ring-white">
-                                    {selectionIndex + 1}
-                                </div>
+                                <>
+                                    {/* Badge de número de selección */}
+                                    <div className="absolute top-1 right-1 sm:top-1.5 sm:right-1.5 w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center text-white font-bold text-xs sm:text-base shadow-lg ring-2 ring-white animate-bounce">
+                                        {selectionIndex + 1}
+                                    </div>
+                                    {/* Indicador visual de selección */}
+                                    <div className="absolute inset-0 bg-yellow-500/10 rounded-lg pointer-events-none" />
+                                </>
                             )}
-                        </div>
+                        </button>
                     );
                 })}
             </div>
@@ -75,7 +99,8 @@ const WordSelectionScreen: React.FC<WordSelectionScreenProps> = ({ onSelect, num
                 <button
                     type="button"
                     onClick={() => onSelect(selected)}
-                    className="btn-action px-6 sm:px-8 py-2 sm:py-3 rounded-full font-bold text-base sm:text-lg shadow-lg mt-4 sm:mt-6 animate-pulse w-full sm:w-auto"
+                    className="btn btn-primary btn-lg mt-4 sm:mt-6 animate-pulse w-full sm:w-auto"
+                    aria-label={`Confirmar selección de ${numberOfPairs} ${numberOfPairs > 1 ? 'palabras' : 'palabra'}`}
                 >
                     Confirmar Selección
                 </button>

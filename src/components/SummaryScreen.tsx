@@ -32,26 +32,31 @@ const SummaryScreen: React.FC<SummaryScreenProps> = ({
                     {isImage ? 'I' : 'P'}
                 </div>
 
-                {/* Carta */}
-                <div className="w-20 h-28 sm:w-24 sm:h-32 md:w-28 md:h-36 lg:w-32 lg:h-40 bg-white rounded-lg shadow-lg overflow-hidden border-2 border-gray-300">
-                    {isImage ? (
-                        <img 
-                            src={content} 
-                            alt={`Imagen ${cardNumber}`}
-                            className="w-full h-full object-cover"
-                        />
-                    ) : (
-                        <div className="w-full h-full flex items-center justify-center p-2">
-                            <div className="text-center">
-                                <div className="text-xs sm:text-sm font-bold text-gray-800 mb-1">
-                                    Palabra {cardNumber}
-                                </div>
-                                <div className="text-xs sm:text-sm text-gray-600 leading-tight">
-                                    {content}
+                {/* Carta - Proporción 2:3 como carta real */}
+                <div className="card-oh-md sm:card-oh-lg md:card-oh-lg lg:card-oh-xl">
+                    <div className="w-full h-full bg-white rounded-lg shadow-lg overflow-hidden border-2 border-gray-300">
+                        {isImage ? (
+                            <img
+                                src={content}
+                                alt={`Imagen ${cardNumber}`}
+                                className="w-full h-full object-cover"
+                            />
+                        ) : (
+                            <div className="w-full h-full flex items-center justify-center p-2 relative bg-white rounded-lg">
+                                {/* Palabra en layout de carta OH */}
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    {/* Palabra en los 4 lados */}
+                                    <span className="absolute top-2 left-1/2 transform -translate-x-1/2 text-xs sm:text-sm font-bold text-gray-800 uppercase">{content}</span>
+                                    <span className="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-xs sm:text-sm font-bold text-gray-800 uppercase">{content}</span>
+                                    <span className="absolute left-2 top-1/2 transform -translate-y-1/2 -rotate-90 text-xs sm:text-sm font-bold text-gray-800 uppercase">{content}</span>
+                                    <span className="absolute right-2 top-1/2 transform -translate-y-1/2 rotate-90 text-xs sm:text-sm font-bold text-gray-800 uppercase">{content}</span>
+
+                                    {/* Marco rojo interior */}
+                                    <div className="absolute border-2 border-red-500 rounded" style={{ top: '15%', left: '15%', right: '15%', bottom: '15%' }}></div>
                                 </div>
                             </div>
-                        </div>
-                    )}
+                        )}
+                    </div>
                 </div>
             </div>
         );
