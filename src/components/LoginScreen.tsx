@@ -48,20 +48,24 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
                         <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
                             Contraseña
                         </label>
-                        <div className="relative">
+                        <div className="relative" style={{ pointerEvents: 'auto' }}>
                             <input
                                 id="password"
                                 type="text"
                                 inputMode="text"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                onFocus={(e) => e.target.scrollIntoView({ block: 'center' })}
-                                onTouchStart={(e) => e.stopPropagation()}
-                                onClick={(e) => e.preventDefault()}
                                 className="w-full px-4 py-3 pr-12 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
                                 placeholder="Ingresa tu contraseña"
-                                style={{ fontSize: '16px', minHeight: '48px', WebkitAppearance: 'none', WebkitUserSelect: 'text' }}
-                                autoComplete="current-password"
+                                style={{ 
+                                    fontSize: '16px', 
+                                    minHeight: '48px', 
+                                    WebkitAppearance: 'none',
+                                    pointerEvents: 'auto',
+                                    cursor: 'text',
+                                    touchAction: 'auto',
+                                    userSelect: 'text'
+                                }}
                                 required
                             />
                             <button
@@ -69,6 +73,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
                                 onClick={() => setShowPassword(!showPassword)}
                                 className="absolute right-2 top-1/2 transform -translate-y-1/2 px-3 py-2 text-sm text-gray-600 hover:text-gray-800 transition-colors z-10 bg-white"
                                 aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                                style={{ pointerEvents: 'auto' }}
                             >
                                 {showPassword ? 'Ocultar' : 'Ver'}
                             </button>
