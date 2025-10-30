@@ -217,14 +217,13 @@ const CanvasScreen: React.FC<CanvasScreenProps> = ({
 
             {/* Grid de cartas */}
             <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-4 sm:p-6 mb-4 sm:mb-6 overflow-x-auto">
-                <div className={`grid gap-4 sm:gap-5 md:gap-6 justify-items-center ${
+                <div className={`grid gap-5 sm:gap-6 md:gap-8 justify-items-center justify-center ${
                     numberOfPairs <= 2 ? 'grid-cols-2 sm:grid-cols-2 md:grid-cols-4' :
-                    numberOfPairs <= 3 ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6' :
-                    numberOfPairs <= 4 ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-8' :
-                    numberOfPairs <= 5 ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5' :
+                    numberOfPairs <= 3 ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5' :
+                    numberOfPairs <= 4 ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6' :
+                    numberOfPairs <= 5 ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6' :
                     numberOfPairs <= 6 ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6' :
-                    numberOfPairs <= 7 ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6' :
-                    'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8'
+                    'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6'
                 }`}>
                     {cards.map(renderCard)}
                 </div>

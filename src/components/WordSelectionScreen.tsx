@@ -65,14 +65,14 @@ const WordSelectionScreen: React.FC<WordSelectionScreenProps> = ({ onSelect, num
                     </div>
                 </div>
             </div>
-            <div className="card-selection-grid grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 xl:grid-cols-9 gap-2 sm:gap-3 md:gap-4 max-h-[65vh] sm:max-h-[70vh] md:max-h-[75vh] overflow-y-auto p-2 sm:p-3 md:p-4 rounded-lg bg-black/5 scroll-smooth">
+            <div className="card-selection-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 max-h-[65vh] sm:max-h-[70vh] md:max-h-[75vh] overflow-y-auto p-3 sm:p-4 rounded-lg bg-black/5 scroll-smooth justify-items-center">
                 {WORD_CARD_DATA.map(word => {
                     const selectionIndex = selected.indexOf(word);
                     const isSelected = selectionIndex !== -1;
                     return (
-                        <button
-                            key={word}
-                            onClick={() => handleToggleSelect(word)}
+                        <button 
+                            key={word} 
+                            onClick={() => handleToggleSelect(word)} 
                             className={`relative cursor-pointer aspect-[2/3] rounded-lg shadow-md flex items-center justify-center p-1 touch-manipulation transition-all duration-200 hover:scale-105 hover:shadow-xl ${
                                 isSelected ? 'scale-105 ring-2 sm:ring-4 ring-offset-1 sm:ring-offset-2 ring-[#D37A47]' : ''
                             }`}

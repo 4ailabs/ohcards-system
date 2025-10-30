@@ -86,7 +86,7 @@ const PairSelectionScreen: React.FC<PairSelectionScreenProps> = ({
 
             {/* Grid de pares */}
             <div className="container-glass">
-                <div className={`grid gap-3 sm:gap-4 ${
+                <div className={`grid justify-items-center justify-center gap-4 sm:gap-6 md:gap-8 ${
                     numberOfPairs <= 2 ? 'grid-cols-2' :
                     numberOfPairs <= 3 ? 'grid-cols-3' :
                     numberOfPairs <= 4 ? 'grid-cols-2 sm:grid-cols-4' :
