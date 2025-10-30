@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  color-scheme: light;
+}
+
 /* Estilos base para móviles */
 * {
   box-sizing: border-box;
@@ -18,17 +22,14 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Mejoras para touch targets en móviles */
-button {
-  touch-action: manipulation;
-  min-height: 44px; /* Apple's recommended minimum touch target size */
+/* Asegurar contraste de títulos en cualquier modo del sistema */
+h1, h2, h3, h4, h5, h6 {
+  color: #1f2937; /* gris-800 */
 }
 
-/* Asegurar que inputs/textareas sean interactivos en iOS */
-input, textarea, select {
-  touch-action: auto;
-  -webkit-user-select: text;
-  user-select: text;
+/* Mejoras para touch targets en móviles */
+button, input, textarea, select {
+  touch-action: manipulation;
   min-height: 44px; /* Apple's recommended minimum touch target size */
 }
 
