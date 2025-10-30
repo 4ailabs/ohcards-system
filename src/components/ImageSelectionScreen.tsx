@@ -65,37 +65,37 @@ const ImageSelectionScreen: React.FC<ImageSelectionScreenProps> = ({ onSelect, n
                     </div>
                 </div>
             </div>
-            <div className="card-selection-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 max-h-[65vh] sm:max-h-[70vh] md:max-h-[75vh] overflow-y-auto p-3 sm:p-4 rounded-lg bg-black/5 scroll-smooth justify-items-center">
-                {IMAGE_CARD_URLS.map(url => {
-                    const selectionIndex = selected.indexOf(url);
-                    const isSelected = selectionIndex !== -1;
-                    return (
-                        <button
-                            key={url}
-                            onClick={() => handleToggleSelect(url)}
-                            className={`relative cursor-pointer aspect-[2/3] rounded-lg shadow-md transition-all duration-200 hover:scale-105 hover:shadow-xl flex items-center justify-center p-1 touch-manipulation ${
-                                isSelected ? 'scale-105 ring-2 sm:ring-4 ring-offset-1 sm:ring-offset-2 ring-[#D37A47]' : ''
-                            }`}
-                            aria-label={isSelected ? `Carta de imagen ${selectionIndex + 1}, presiona para deseleccionar` : "Carta de imagen boca abajo, presiona para seleccionar"}
-                            aria-pressed={isSelected}
-                            type="button"
-                        >
-                            <ImageCardBack />
-                            {isSelected && (
-                                <>
-                                    {/* Badge de número de selección */}
-                                    <div className="absolute top-1 right-1 sm:top-1.5 sm:right-1.5 w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center text-white font-bold text-xs sm:text-base shadow-lg ring-2 ring-white animate-bounce">
-                                        {selectionIndex + 1}
-                                    </div>
-                                    {/* Indicador visual de selección */}
-                                    <div className="absolute inset-0 bg-green-500/10 rounded-lg pointer-events-none" />
-                                </>
-                            )}
-                        </button>
-                    );
-                })}
+            <div className="mx-auto max-w-[1200px] sm:max-w-[1400px] md:max-w-[1500px] rounded-lg bg-black/5 p-3 sm:p-4">
+                <div className="grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] gap-4 sm:gap-5 md:gap-6 justify-items-center">
+                    {IMAGE_CARD_URLS.map(url => {
+                        const selectionIndex = selected.indexOf(url);
+                        const isSelected = selectionIndex !== -1;
+                        return (
+                            <button
+                                key={url}
+                                onClick={() => handleToggleSelect(url)}
+                                className={`relative cursor-pointer w-[120px] sm:w-[130px] md:w-[150px] aspect-[2/3] rounded-lg shadow-md transition-all duration-200 hover:scale-105 hover:shadow-xl flex items-center justify-center p-1 touch-manipulation ${
+                                    isSelected ? 'scale-105 ring-2 sm:ring-4 ring-offset-1 sm:ring-offset-2 ring-[#D37A47]' : ''
+                                }`}
+                                aria-label={isSelected ? `Carta de imagen ${selectionIndex + 1}, presiona para deseleccionar` : "Carta de imagen boca abajo, presiona para seleccionar"}
+                                aria-pressed={isSelected}
+                                type="button"
+                            >
+                                <ImageCardBack />
+                                {isSelected && (
+                                    <>
+                                        <div className="absolute top-1 right-1 sm:top-1.5 sm:right-1.5 w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center text-white font-bold text-xs sm:text-base shadow-lg ring-2 ring-white animate-bounce">
+                                            {selectionIndex + 1}
+                                        </div>
+                                        <div className="absolute inset-0 bg-green-500/10 rounded-lg pointer-events-none" />
+                                    </>
+                                )}
+                            </button>
+                        );
+                    })}
+                </div>
             </div>
-             {canConfirm && (
+            {canConfirm && (
                 <button
                     type="button"
                     onClick={() => onSelect(selected)}
